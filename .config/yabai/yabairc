@@ -1,0 +1,53 @@
+# the scripting-addition must be loaded manually if
+# you are running yabai on macOS Big Sur. Uncomment
+# the following line to have the injection performed
+# when the config is executed during startup.
+#
+# for this to work you must configure sudo such that
+# it will be able to run the command without password
+
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+SPACEBAR_HEIGHT=$(spacebar -m config height)
+
+# Set larger padding when primary display is larger than laptop
+PADDING=$(( $(yabai -m query --displays --space | jq '.frame.w // 0 |= tonumber|floor') >= 1600 ? 15 : 5 ))
+
+yabai -m config                                 \
+    mouse_follows_focus          on             \
+    focus_follows_mouse          off            \
+    window_origin_display        default        \
+    window_placement             second_child   \
+    window_topmost               off            \
+    window_shadow                off            \
+    window_animation_duration    0.0            \
+    window_opacity_duration      0.0            \
+    active_window_opacity        1.0            \
+    normal_window_opacity        1.0            \
+    window_opacity               off            \
+    insert_feedback_color        0xffee5396     \
+    split_ratio                  0.62           \
+    split_type                   auto           \
+    auto_balance                 off            \
+    window_gap                   $PADDING       \
+    layout                       bsp            \
+    mouse_modifier               cmd            \
+    mouse_action1                move           \
+    mouse_action2                resize         \
+    mouse_drop_action            swap           \
+	external_bar                 all:$SPACEBAR_HEIGHT:0
+
+PADDING_REFRESH_COMMAND="p=\$((\$(yabai -m query --displays --space | jq '.frame.w // 0 |= tonumber|floor') >= 1600 ? $PADDING \
+    : (\$(yabai -m query --windows --space | jq 'length') == 1 ? 0 : $PADDING))) && \
+    yabai -m config --space mouse top_padding \$p && \
+    yabai -m config --space mouse bottom_padding \$p && \
+    yabai -m config --space mouse left_padding \$p && \
+    yabai -m config --space mouse right_padding \$p"
+
+yabai -m signal --add event=window_created action="$PADDING_REFRESH_COMMAND"
+yabai -m signal --add event=window_destroyed action="$PADDING_REFRESH_COMMAND"
+yabai -m signal --add event=application_launched action="$PADDING_REFRESH_COMMAND"
+yabai -m signal --add event=application_terminated action="$PADDING_REFRESH_COMMAND"
+
+eval "$PADDING_REFRESH_COMMAND"

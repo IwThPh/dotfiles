@@ -1,0 +1,15 @@
+import = ["~/.config/alacritty/themes/carbonfox.toml"]
+
+[window]
+padding = { x = 5, y = 5 }
+dynamic_padding = true
+# decorations = "buttonless"
+decorations = "none"
+
+[font]
+normal = { family = "BlexMono Nerd Font Mono", style = "Light" }
+bold.style = "SemiBold"
+italic.style = "Light Italic"
+bold_italic.style = "Semibold Italic"
+
+size = 14.0
