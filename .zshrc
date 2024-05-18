@@ -20,31 +20,38 @@ autoload -Uz _zinit
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
-zinit light-mode for \
+zi light-mode for \
     zdharma-continuum/zinit-annex-as-monitor \
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
 
 ### End of Zinit's installer chunk
-zinit ice depth"1"
-zinit light romkatv/powerlevel10k
+zi ice depth"1"
+zi light romkatv/powerlevel10k
 
-zinit light-mode for \
+zi light-mode for \
     zsh-users/zsh-autosuggestions \
     zsh-users/zsh-completions \
     zsh-users/zsh-syntax-highlighting \
     Aloxaf/fzf-tab
 
-zinit snippet OMZP::aws
-zinit snippet OMZP::git
-# zinit snippet OMZP::docker
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
-zinit snippet OMZP::command-not-found
+zi snippet OMZL::git.zsh
+zi snippet OMZP::aws
+zi snippet OMZP::git
+
+zi ice as"completion"
+zi snippet OMZP::docker/completions/_docker
+
+zi ice as"completion"
+zi snippet OMZP::kubectl/kubectl.plugin.zsh
+
+zi snippet OMZP::kubectx
+zi snippet OMZP::command-not-found
 
 # Load completions
-autoload -U compinit && compinit
+autoload -Uz compinit
+compinit
 
 zinit cdreplay -q
 
@@ -75,6 +82,19 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors '${(s.:.)LS_COLORS}'
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+
+# M1 Mac, add homebrew to path
+if [[ $(uname) == "Darwin" ]]; then
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+export EDITOR=nvim
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+if command -v gh &> /dev/null; then
+	gh_token=$(gh auth token)
+	export GITHUB_API_TOKEN="$gh_token"
+fi
 
 source ~/.config/zsh/functions.sh
 source ~/.config/zsh/aliases.sh
