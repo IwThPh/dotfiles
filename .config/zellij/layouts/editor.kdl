@@ -41,7 +41,7 @@ layout {
         tab_normal               "#[fg=#6C7086,bg=black] {index} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
         tab_active               "#[fg=white,bg=black,bold,italic] {index} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
         tab_fullscreen_indicator "□ "
-        tab_sync_indicator       "  "
+        tab_sync_indicator       " "
         tab_floating_indicator   "󰉈 "
 
         command_git_branch_command  "git branch --show-current"
@@ -50,8 +50,8 @@ layout {
         command_git_branch_rendermode  "static"
 
         datetime          "#[fg=#9399B2,bg=black] {format} "
-        datetime_format   "%A, %d %b %Y %H:%M"
-        datetime_timezone "Europe/Berlin"
+        datetime_format   "%d %b %Y %H:%M"
+        datetime_timezone "Europe/London"
       }
     }
   }
