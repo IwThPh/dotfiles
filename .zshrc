@@ -71,9 +71,19 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors '${(s.:.)LS_COLORS}'
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+
+
+if whence dircolors >/dev/null; then
+  zi ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+  zi light trapd00r/LS_COLORS
+else
+  export CLICOLOR=1
+  zstyle ':completion:*:default' list-colors ''
+fi
 
 # M1 Mac, add homebrew to path
 if [[ $(uname) == "Darwin" ]]; then
