@@ -1,7 +1,7 @@
 import = ["~/.config/alacritty/themes/carbonfox.toml"]
 
 [window]
-padding = { x = 5, y = 5 }
+padding = { x = 8, y = 8 }
 dynamic_padding = true
 # decorations = "buttonless"
 decorations = "none"
