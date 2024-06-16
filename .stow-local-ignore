@@ -22,3 +22,7 @@ _darcs
 ^/readme.*
 ^/LICENSE.*
 ^/COPYING
+
+# don't link this, just stored here for convenience 
+windows-terminal.json
+.ideavimrc
