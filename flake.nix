@@ -75,7 +75,7 @@
 
 	  extraSpecialArgs = {
 	    inherit systemSettings;
-	    inherit uesrSettings;
+	    inherit userSettings;
 	    inherit inputs;
 	  };
 	};
@@ -91,7 +91,7 @@
 
 	  specialArgs = {
 	    inherit systemSettings;
-	    inherit uesrSettings;
+	    inherit userSettings;
 	    inherit inputs;
 	  };
 	};
