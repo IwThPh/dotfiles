@@ -7,7 +7,7 @@
 {
   imports =
     [ ./hardware-configuration.nix
-      ( ./. + "../../system/wm" + ("/" + uesrSettings.vm) + ".nix")
+      ( ./. + "../../system/wm" + ("/" + userSettings.wm) + ".nix")
     ];
 
   nix.package = pkgs.nixFlakes;
@@ -53,7 +53,7 @@
   services.printing.enable = true;
 
   # User account
-  users.users.${uesrSettings.username} = {
+  users.users.${userSettings.username} = {
     isNormalUser = true;
     description = userSettings.name;
     extraGroups = [ "networkmanager" "wheel" ];
