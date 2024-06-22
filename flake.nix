@@ -26,13 +26,13 @@
   outputs = inputs@{ self, ... }:
     let
       systemSettings = {
-        system = "x86_64-linux"
-	hostname = "iwanp-ski"
-	profile = "personal"
-	timezone = "Europe/London"
-	locale = "en_GB.UTF-8"
-	bootMode = "uefi"
-	bootMountPath = "/boot"
+        system = "x86_64-linux";
+	hostname = "iwanp-ski";
+	profile = "personal";
+	timezone = "Europe/London";
+	locale = "en_GB.UTF-8";
+	bootMode = "uefi";
+	bootMountPath = "/boot";
       };
 
       userSettings = rec {
