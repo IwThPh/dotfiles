@@ -34,7 +34,7 @@
           allowUnFree = true;
           allowUnFreePredicate = (_: true);
         };
-        overlays = [ inputs.rust-overlays.default ];
+        overlays = [ inputs.rust-overlay.overlays.default ];
       });
 
       lib = inputs.nixpkgs.lib;
@@ -54,7 +54,7 @@
     in
     {
       homeConfigurations = {
-        user = home-manager.lib.homeManagerConfiguration {
+        personal = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
           modules = [
