@@ -26,6 +26,7 @@
         dotfilesDir = "~/dotfiles";
         wm = "hyprland";
         wmType = "wayland";
+        theme = "emil";
         browser = "brave";
         term = "alacritty";
         font = "IBM Blex Mono";

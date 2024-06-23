@@ -14,6 +14,7 @@
       ../../system/hardware/time.nix
       #("../../system/wm" + ("/" + userSettings.wm) + ".nix")
       ../../system/wm/hyprland.nix
+      ../../system/style/stylix.nix
     ];
 
   # Fix nix path
