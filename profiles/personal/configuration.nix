@@ -8,11 +8,12 @@
   imports =
     [
       ./hardware-configuration.nix
-      # ../../system/hardware/bluetooth.nix
+      ../../system/hardware/bluetooth.nix
       # ../../system/hardware/power.nix
-      # ../../system/hardware/printing.nix
-      # ../../system/hardware/time.nix
-      # (./. + "../../system/wm" + ("/" + userSettings.wm) + ".nix")
+      ../../system/hardware/printing.nix
+      ../../system/hardware/time.nix
+      #("../../system/wm" + ("/" + userSettings.wm) + ".nix")
+      ../../system/wm/hyprland.nix
     ];
 
   # Fix nix path
@@ -89,11 +90,6 @@
       xdg-desktop-portal-gtk
     ];
   };
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  programs.hyprland.enable = true;
 
   console.keyMap = "uk";
 

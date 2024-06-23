@@ -8,11 +8,7 @@
     ./fonts.nix
   ];
 
-  environment.systemPackages = with pkgs;
-    [
-      wayland
-      waydroid
-    ];
+  environment.systemPackages = with pkgs; [ wayland ];
 
   services.xserver = {
     enable = true;
@@ -21,13 +17,13 @@
       variant = "";
       options = "ctrl:nocaps";
     };
+  };
 
-    displayManager.sddm = {
+  services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
       enableHidpi = true;
       package = pkgs.sddm;
-    };
   };
 }
 
