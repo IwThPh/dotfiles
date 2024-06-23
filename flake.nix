@@ -3,6 +3,12 @@
 
   outputs = inputs@{ self, ... }:
     let
+      lib = inputs.nixpkgs.lib;
+
+      home-manager = inputs.home-manager;
+
+      pkgs = (import inputs.nixpkgs { system = systemSettings.system; });
+
       systemSettings = {
         system = "x86_64-linux";
         hostname = "iwanp-ski";
@@ -27,20 +33,6 @@
         editor = "nvim";
         spawnEditor = "exec " + term + " -e " + editor;
       };
-
-      pkgs = (import inputs.nixpkgs {
-        system = systemSettings.system;
-        config = {
-          allowUnFree = true;
-          allowUnFreePredicate = (_: true);
-        };
-        overlays = [ inputs.rust-overlay.overlays.default ];
-      });
-
-      lib = inputs.nixpkgs.lib;
-
-      home-manager = inputs.home-manager;
-
     in
     {
       homeConfigurations = {
@@ -78,7 +70,7 @@
     };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
