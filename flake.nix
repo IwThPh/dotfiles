@@ -29,7 +29,7 @@
         theme = "emil";
         browser = "brave";
         term = "alacritty";
-        font = "IBM Blex Mono";
+        font = "BlexMono Nerd Font Mono";
         fontPkg = pkgs.nerdfonts;
         editor = "nvim";
         spawnEditor = "exec " + term + " -e " + editor;

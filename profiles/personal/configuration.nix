@@ -70,17 +70,20 @@
 
 
   environment.systemPackages = with pkgs; [
-    git
     home-manager
-    vim
+    git
+    neovim
+    fzf
+    fd
+    ripgrep
     wget
     wpa_supplicant
     zig
   ];
 
-  # environment.shells = with pkgs; [ zsh ];
-  # users.defaultUserShell = pkgs.zsh;
-  # programs.zsh.enable = true;
+  environment.shells = with pkgs; [ zsh ];
+  users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
 
   fonts.fontDir.enable = true;
 

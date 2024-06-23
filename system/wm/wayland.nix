@@ -10,15 +10,6 @@
 
   environment.systemPackages = with pkgs; [ wayland ];
 
-  services.xserver = {
-    enable = true;
-    xkb = {
-      layout = "gb";
-      variant = "";
-      options = "ctrl:nocaps";
-    };
-  };
-
   services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
