@@ -11,6 +11,7 @@
     ../../user/wm/hyprland/hyprland.nix
     # ../../user/shell/sh.nix
     # ../../user/git/git.nix
+    ../../user/style/stylix.nix
   ];
 
   home.packages = with pkgs; [

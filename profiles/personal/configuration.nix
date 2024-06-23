@@ -92,7 +92,7 @@
     ];
   };
 
-  console.keyMap = "uk";
+  # console.keyMap = "uk";
 
   # It is ok to leave this unchanged for compatibility.
   system.stateVersion = "24.05";
