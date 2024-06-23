@@ -8,8 +8,18 @@
   imports =
     [
       ./hardware-configuration.nix
+      ../../system/hardware/bluetooth.nix
+      ../../system/hardware/power.nix
+      ../../system/hardware/printing.nix
+      ../../system/hardware/time.nix
       (./. + "../../system/wm" + ("/" + userSettings.wm) + ".nix")
     ];
+
+  # Fix nix path
+  nix.nixPath = [ "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+                  "nixos-config=$HOME/dotfiles/system/configuration.nix"
+                  "/nix/var/nix/profiles/per-user/root/channels"
+                ];
 
   nix.package = pkgs.nixFlakes;
   nix.extraOptions = ''
@@ -18,9 +28,12 @@
 
   nixpkgs.config.allowUnFree = true;
 
+  boot.kernelModules = [ "cpufreq_powersave" ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = systemSettings.bootMountPath;
 
   # Networking
   networking.hostName = systemSettings.hostname;
@@ -44,16 +57,6 @@
     LC_TIME = systemSettings.locale;
   };
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  programs.hyprland.enable = true;
-
-  console.keyMap = "uk";
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # User account
   users.users.${userSettings.username} = {
     isNormalUser = true;
@@ -73,7 +76,6 @@
     zig
   ];
 
-
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
@@ -87,6 +89,16 @@
       pkgs.xdg-desktop-portal-gtk
     ];
   };
+
+  # Enable the KDE Plasma Desktop Environment.
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+  programs.hyprland.enable = true;
+
+  console.keyMap = "uk";
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
 
   # It is ok to leave this unchanged for compatibility.
   system.stateVersion = "24.05";
