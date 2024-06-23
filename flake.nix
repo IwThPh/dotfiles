@@ -41,20 +41,10 @@
 
       home-manager = inputs.home-manager;
 
-      # Systems that can run tests:
-      supportedSystems = [ "x86_64-linux" ];
-
-      # Function to generate a set based on supported systems:
-      forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
-
-      # Attribute set of nixpkgs for each system:
-      nixpkgsFor =
-        forAllSystems (system: import inputs.nixpkgs { inherit system; });
-
     in
     {
       homeConfigurations = {
-        personal = home-manager.lib.homeManagerConfiguration {
+        user = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
           modules = [
@@ -85,25 +75,6 @@
           };
         };
       };
-
-      packages = forAllSystems (system:
-        let pkgs = nixpkgsFor.${system};
-        in {
-          default = self.packages.${system}.install;
-          install = pkgs.writeShellApplication {
-          name = "install";
-          runtimeInputs = with pkgs; [ git ]; # I could make this fancier by adding other deps
-            text = ''${./install.sh} "$@"'';
-          };
-      });
-
-      apps = forAllSystems (system: {
-        default = self.apps.${system}.install;
-        install = {
-          type = "app";
-          program = "${self.packages.${system}.install}/bin/install";
-        };
-      });
     };
 
   inputs = {
