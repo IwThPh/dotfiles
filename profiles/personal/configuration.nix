@@ -28,7 +28,7 @@
 
   nixpkgs.config.allowUnFree = true;
 
-  boot.kernelModules = [ "cpufreq_powersave" ];
+  # boot.kernelModules = [ "cpufreq_powersave" ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
