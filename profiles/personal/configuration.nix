@@ -8,11 +8,11 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../system/hardware/bluetooth.nix
-      ../../system/hardware/power.nix
-      ../../system/hardware/printing.nix
-      ../../system/hardware/time.nix
-      (./. + "../../system/wm" + ("/" + userSettings.wm) + ".nix")
+      # ../../system/hardware/bluetooth.nix
+      # ../../system/hardware/power.nix
+      # ../../system/hardware/printing.nix
+      # ../../system/hardware/time.nix
+      # (./. + "../../system/wm" + ("/" + userSettings.wm) + ".nix")
     ];
 
   # Fix nix path
@@ -76,17 +76,17 @@
     zig
   ];
 
-  environment.shells = with pkgs; [ zsh ];
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
+  # environment.shells = with pkgs; [ zsh ];
+  # users.defaultUserShell = pkgs.zsh;
+  # programs.zsh.enable = true;
 
   fonts.fontDir.enable = true;
 
   xdg.portal = {
     enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal
-      pkgs.xdg-desktop-portal-gtk
+    extraPortals = with pkgs; [
+      xdg-desktop-portal
+      xdg-desktop-portal-gtk
     ];
   };
 
@@ -96,9 +96,6 @@
   programs.hyprland.enable = true;
 
   console.keyMap = "uk";
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # It is ok to leave this unchanged for compatibility.
   system.stateVersion = "24.05";
