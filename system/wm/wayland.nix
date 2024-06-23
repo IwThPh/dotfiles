@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ 
+  imports = [
     ./pipewire.nix
     ./dbus.nix
     ./gnome-keyring.nix
@@ -10,7 +10,8 @@
 
   environment.systemPackages = with pkgs;
     [
-      wayland waydroid
+      wayland
+      waydroid
     ];
 
   services.xserver = {
@@ -26,7 +27,7 @@
       wayland.enable = true;
       enableHidpi = true;
       package = pkgs.sddm;
-    }
-  }
+    };
+  };
 }
 

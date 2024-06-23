@@ -7,7 +7,7 @@
   programs.home-manager.enable = true;
 
   imports = [
-    (./. + "../../user/wm" + ("/" + userSettins.wm + "/" + userSettings.wm) + ".nix")
+    (./. + "../../user/wm" + ("/" + userSettings.wm + "/" + userSettings.wm) + ".nix")
     ../../user/shell/sh.nix
     ../../user/git/git.nix
   ];

@@ -1,8 +1,9 @@
-{ inputs, pkgs, lib, ... }: let
+{ inputs, pkgs, lib, ... }:
+let
   pkgs-hyprland = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
-  imports = [ 
+  imports = [
     ./wayland.nix
     ./pipewire.nix
     ./dbus.nix

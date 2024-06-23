@@ -1,4 +1,5 @@
-{ inputs, config, lib, pkgs, userSettings, systemSettings, pkgs-nwg-dock-hyprland, ... }: let
+{ inputs, config, lib, pkgs, userSettings, systemSettings, pkgs-nwg-dock-hyprland, ... }:
+let
   pkgs-hyprland = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
@@ -6,16 +7,19 @@ in
     ../../app/terminal/alacritty.nix
     ../../app/terminal/kitty.nix
     #(import ../../app/dmenu-scripts/networkmanager-dmenu.nix {
-      #dmenu_command = "fuzzel -d -f ${userSettings.font} :size=16"; inherit config lib pkgs;
-      #dmenu_command = "fuzzel -d"; inherit config lib pkgs;
+    #dmenu_command = "fuzzel -d -f ${userSettings.font} :size=16"; inherit config lib pkgs;
+    #dmenu_command = "fuzzel -d"; inherit config lib pkgs;
     #})
     #../input/nihongo.nix
   ] ++
   (if (systemSettings.profile == "apersonal") then
-    [ (import ./hyprprofiles/hyprprofiles.nix {
-        dmenuCmd = "fuzzel -d"; inherit config lib pkgs; })]
+    [
+      (import ./hyprprofiles/hyprprofiles.nix {
+        dmenuCmd = "fuzzel -d"; inherit config lib pkgs;
+      })
+    ]
   else
-    []);
+    [ ]);
 
   gtk.cursorTheme = {
     package = pkgs.quintom-cursor-theme;
@@ -26,12 +30,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    plugins = [
-      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprtrails
-      # inputs.hycov.packages.${pkgs.system}.hycov
-      # FIXME hypgrass currently broken on 0.41.0
-      #inputs.hyprgrass.packages.${pkgs.system}.default
-    ];
+    plugins = [ ];
     settings = { };
     extraConfig = ''
       exec-once = dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
@@ -90,8 +89,8 @@ in
        bind=SUPERSHIFT,K,exec,hyprctl kill
 
        bind=SUPER,RETURN,exec,'' + userSettings.term + ''
-       bind=SUPER,A,exec,'' + userSettings.spawnEditor + ''
-       bind=SUPER,S,exec,'' + userSettings.browser + ''
+      bind=SUPER,A,exec,'' + userSettings.spawnEditor + ''
+      bind=SUPER,S,exec,'' + userSettings.browser + ''
 
        bind=SUPER,Q,killactive
        bind=SUPERSHIFT,Q,exit
@@ -233,7 +232,7 @@ in
       terminal = false;
       type = "Application";
       noDisplay = true;
-      icon = "/home/"+userSettings.username+"/.local/share/pixmaps/hyprland-logo-stylix.svg";
+      icon = "/home/" + userSettings.username + "/.local/share/pixmaps/hyprland-logo-stylix.svg";
     })
     gnome.zenity
     wlr-randr
@@ -320,13 +319,13 @@ in
       if pgrep -x nixos-rebuild > /dev/null || pgrep -x home-manager > /dev/null || pgrep -x kdenlive > /dev/null || pgrep -x FL64.exe > /dev/null || pgrep -x blender > /dev/null || pgrep -x flatpak > /dev/null;
       then echo "Shouldn't suspend"; sleep 10; else echo "Should suspend"; systemctl suspend; fi
     '')
-  ++ (with pkgs-nwg-dock-hyprland; [
+    ++ (with pkgs-nwg-dock-hyprland; [
     (nwg-dock-hyprland.overrideAttrs (oldAttrs: {
       patches = ./patches/noactiveclients.patch;
     }))
   ]);
 
-  programs.waybar = {
+    programs.waybar = {
     enable = true;
     package = pkgs.waybar.overrideAttrs (oldAttrs: {
       postPatch = ''
@@ -390,7 +389,7 @@ in
           "on-scroll-down" = "hyprctl dispatch workspace e-1";
           #"all-outputs" = true;
           #"active-only" = true;
-          "ignore-workspaces" = ["scratch" "-"];
+          "ignore-workspaces" = [ "scratch" "-" ];
           #"show-special" = false;
           #"persistent-workspaces" = {
           #    # this block doesn't seem to work for whatever reason
@@ -473,7 +472,7 @@ in
     style = ''
       * {
           /* `otf-font-awesome` is required to be installed for icons */
-          font-family: FontAwesome, ''+userSettings.font+'';
+          font-family: FontAwesome, '' + userSettings.font + '';
 
           font-size: 20px;
       }
@@ -668,10 +667,10 @@ in
       '';
   };
 
-  services.udiskie.enable = true;
-  services.udiskie.tray = "always";
-  programs.fuzzel.enable = true;
-  programs.fuzzel.settings = {
+    services.udiskie.enable = true;
+    services.udiskie.tray = "always";
+    programs.fuzzel.enable = true;
+    programs.fuzzel.settings = {
     main = {
       font = userSettings.font + ":size=20";
       dpi-aware = "no";
@@ -683,8 +682,8 @@ in
       radius = 7;
     };
   };
-  services.fnott.enable = true;
-  services.fnott.settings = {
+    services.fnott.enable = true;
+    services.fnott.settings = {
     main = {
       anchor = "bottom-right";
       stacking-order = "top-down";
@@ -722,4 +721,4 @@ in
       default-timeout = 0;
     };
   };
-}
+    }

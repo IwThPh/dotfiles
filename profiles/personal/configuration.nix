@@ -6,8 +6,9 @@
 
 {
   imports =
-    [ ./hardware-configuration.nix
-      ( ./. + "../../system/wm" + ("/" + userSettings.wm) + ".nix")
+    [
+      ./hardware-configuration.nix
+      (./. + "../../system/wm" + ("/" + userSettings.wm) + ".nix")
     ];
 
   nix.package = pkgs.nixFlakes;
@@ -57,7 +58,7 @@
     isNormalUser = true;
     description = userSettings.name;
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = [];
+    packages = [ ];
     uid = 1000;
   };
 
