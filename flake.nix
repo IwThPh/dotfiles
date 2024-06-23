@@ -56,7 +56,8 @@
           system = systemSettings.system;
 
           modules = [
-            (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
+            # (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
+            ./profiles/personal/configuration.nix
           ];
 
           specialArgs = {
