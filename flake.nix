@@ -1,30 +1,6 @@
 {
   description = "IwThPh's Flake";
 
-  inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
-
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland = {
-      type = "git";
-      url = "https://github.com/hyprwm/Hyprland";
-      submodules = true;
-      rev = "ea2501d4556f84d3de86a4ae2f4b22a474555b9f";
-    };
-    hyprland.inputs.nixpkgs.follows = "nixpkgs";
-
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    stylix.url = "github:danth/stylix";
-  };
-
   outputs = inputs@{ self, ... }:
     let
       systemSettings = {
@@ -129,4 +105,28 @@
         };
       });
     };
+
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-24.05";
+
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland = {
+      type = "git";
+      url = "https://github.com/hyprwm/Hyprland";
+      submodules = true;
+      rev = "ea2501d4556f84d3de86a4ae2f4b22a474555b9f";
+    };
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    stylix.url = "github:danth/stylix";
+  };
 }
