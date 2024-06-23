@@ -10,7 +10,7 @@
     # (./. + "../../user/wm" + ("/" + userSettings.wm + "/" + userSettings.wm) + ".nix")
     ../../user/wm/hyprland/hyprland.nix
     # ../../user/shell/sh.nix
-    # ../../user/git/git.nix
+    ../../user/git/git.nix
     ../../user/style/stylix.nix
   ];
 

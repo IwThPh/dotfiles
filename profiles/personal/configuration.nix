@@ -64,8 +64,10 @@
     isNormalUser = true;
     description = userSettings.name;
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = [ ];
+    shell = pkgs.zsh;
+    initialPassword = "password";
     uid = 1000;
+    packages = [ ];
   };
 
 
