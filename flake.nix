@@ -13,14 +13,16 @@
       type = "git";
       url = "https://github.com/hyprwm/Hyprland";
       submodules = true;
-
-      inputs.nixpkgs.follows = "nixpkgs";
+      rev = "ea2501d4556f84d3de86a4ae2f4b22a474555b9f";
     };
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = inputs@{ self, ... }:
@@ -63,6 +65,15 @@
 
       home-manager = inputs.home-manager;
 
+      # Systems that can run tests:
+      supportedSystems = [ "x86_64-linux" ];
+
+      # Function to generate a set based on supported systems:
+      forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
+
+      # Attribute set of nixpkgs for each system:
+      nixpkgsFor =
+        forAllSystems (system: import inputs.nixpkgs { inherit system; });
 
     in
     {
@@ -91,11 +102,31 @@
           ];
 
           specialArgs = {
+            inherit pkgs;
             inherit systemSettings;
             inherit userSettings;
             inherit inputs;
           };
         };
       };
+
+      packages = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system};
+        in {
+          default = self.packages.${system}.install;
+          install = pkgs.writeShellApplication {
+          name = "install";
+          runtimeInputs = with pkgs; [ git ]; # I could make this fancier by adding other deps
+            text = ''${./install.sh} "$@"'';
+          };
+      });
+
+      apps = forAllSystems (system: {
+        default = self.apps.${system}.install;
+        install = {
+          type = "app";
+          program = "${self.packages.${system}.install}/bin/install";
+        };
+      });
     };
 }

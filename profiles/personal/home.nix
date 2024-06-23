@@ -21,7 +21,6 @@
     openvpn
   ];
 
-
   services.syncthing.enable = true;
   xdg.enable = true;
 

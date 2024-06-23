@@ -47,6 +47,7 @@
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+  programs.hyprland.enable = true;
 
   console.keyMap = "uk";
 
@@ -86,8 +87,6 @@
       pkgs.xdg-desktop-portal-gtk
     ];
   };
-
-  programs.hyprland.enable = true;
 
   # It is ok to leave this unchanged for compatibility.
   system.stateVersion = "24.05";

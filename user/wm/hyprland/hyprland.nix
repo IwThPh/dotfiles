@@ -4,15 +4,14 @@ let
 in
 {
   imports = [
-    ../../app/terminal/alacritty.nix
-    ../../app/terminal/kitty.nix
+    ../../app/alacritty.nix
     #(import ../../app/dmenu-scripts/networkmanager-dmenu.nix {
     #dmenu_command = "fuzzel -d -f ${userSettings.font} :size=16"; inherit config lib pkgs;
     #dmenu_command = "fuzzel -d"; inherit config lib pkgs;
     #})
     #../input/nihongo.nix
   ] ++
-  (if (systemSettings.profile == "apersonal") then
+  (if (systemSettings.profile == "unknown") then
     [
       (import ./hyprprofiles/hyprprofiles.nix {
         dmenuCmd = "fuzzel -d"; inherit config lib pkgs;
