@@ -52,7 +52,7 @@
       };
 
       nixosConfigurations = {
-        system = lib.nixosSystem {
+        iwanp = lib.nixosSystem {
           system = systemSettings.system;
 
           modules = [
