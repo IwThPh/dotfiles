@@ -4,27 +4,13 @@ let
 in
 {
   imports = [
-    ../../app/alacritty.nix
+    ../../apps/alacritty.nix
     #(import ../../app/dmenu-scripts/networkmanager-dmenu.nix {
     #dmenu_command = "fuzzel -d -f ${userSettings.font} :size=16"; inherit config lib pkgs;
     #dmenu_command = "fuzzel -d"; inherit config lib pkgs;
     #})
     #../input/nihongo.nix
-  ] ++
-  (if (systemSettings.profile == "unknown") then
-    [
-      (import ./hyprprofiles/hyprprofiles.nix {
-        dmenuCmd = "fuzzel -d"; inherit config lib pkgs;
-      })
-    ]
-  else
-    [ ]);
-
-  gtk.cursorTheme = {
-    package = pkgs.quintom-cursor-theme;
-    name = if (config.stylix.polarity == "light") then "Quintom_Ink" else "Quintom_Snow";
-    size = 36;
-  };
+  ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -318,11 +304,7 @@ in
       if pgrep -x nixos-rebuild > /dev/null || pgrep -x home-manager > /dev/null || pgrep -x kdenlive > /dev/null || pgrep -x FL64.exe > /dev/null || pgrep -x blender > /dev/null || pgrep -x flatpak > /dev/null;
       then echo "Shouldn't suspend"; sleep 10; else echo "Should suspend"; systemctl suspend; fi
     '')
-    ++ (with pkgs-nwg-dock-hyprland; [
-    (nwg-dock-hyprland.overrideAttrs (oldAttrs: {
-      patches = ./patches/noactiveclients.patch;
-    }))
-  ]);
+    ]);
 
     programs.waybar = {
     enable = true;

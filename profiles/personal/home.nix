@@ -7,9 +7,10 @@
   programs.home-manager.enable = true;
 
   imports = [
-    (./. + "../../user/wm" + ("/" + userSettings.wm + "/" + userSettings.wm) + ".nix")
-    ../../user/shell/sh.nix
-    ../../user/git/git.nix
+    # (./. + "../../user/wm" + ("/" + userSettings.wm + "/" + userSettings.wm) + ".nix")
+    ../../user/wm/hyprland/hyprland.nix
+    # ../../user/shell/sh.nix
+    # ../../user/git/git.nix
   ];
 
   home.packages = with pkgs; [
