@@ -8,7 +8,10 @@
     ./fonts.nix
   ];
 
-  environment.systemPackages = with pkgs; [ wayland ];
+  environment.systemPackages = with pkgs; [ 
+    wayland
+    libsForQt5.qt5.qtgraphicaleffects #required for sddm theme sugar candy
+  ];
 
   services.displayManager.sddm = {
       enable = true;

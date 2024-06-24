@@ -86,7 +86,8 @@ in
        bindm=SUPER,mouse:273,resizewindow
        bind=SUPER,T,togglefloating
 
-       bindl=,switch:on:Lid Switch,exec,loginctl lock-session
+       bindl=,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,2880x1800@90,0x0,1.25"
+       bindl=,switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1, disable"
        bind=SUPERCTRL,L,exec,loginctl lock-session
 
        bind=SUPER,H,movefocus,l
