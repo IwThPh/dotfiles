@@ -7,7 +7,21 @@
 
       home-manager = inputs.home-manager;
 
-      pkgs = (import inputs.nixpkgs { system = systemSettings.system; });
+      pkgs = (import inputs.nixpkgs {
+        system = systemSettings.system; 
+        config = {
+          allowUnfree = true;
+          allowUnfreePredicate = (_: true);
+        };
+      });
+      
+      pkgs-unstable = (import inputs.nixpkgs-unstable {
+        system = systemSettings.system; 
+        config = {
+          allowUnfree = true;
+          allowUnfreePredicate = (_: true);
+        };
+      });
 
       systemSettings = {
         system = "x86_64-linux";
@@ -45,6 +59,7 @@
           ];
 
           extraSpecialArgs = {
+            inherit pkgs-unstable;
             inherit systemSettings;
             inherit userSettings;
             inherit inputs;
@@ -62,7 +77,7 @@
           ];
 
           specialArgs = {
-            inherit pkgs;
+            inherit pkgs-unstable;
             inherit systemSettings;
             inherit userSettings;
             inherit inputs;
@@ -73,6 +88,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
