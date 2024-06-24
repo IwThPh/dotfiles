@@ -23,6 +23,9 @@
     openvpn
     slack
     spotify
+    lua
+    luajitPackages.luarocks
+    gnumake
   ];
 
   programs.neovim = {
