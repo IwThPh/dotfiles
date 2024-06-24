@@ -36,7 +36,7 @@ in
       exec-once = hyprpaper
 
       monitor = eDP-1,2880x1800@90,0x0,1.25
-      monitor = DP-1,3440x1440@164.90,-3440x0,1
+      monitor = DP-1,3440x1440@164.90,-3440x0,1,bitdepth,10
       monitor = ,preferred,auto,1
 
       bezier = wind, 0.05, 0.9, 0.1, 1.0
@@ -58,9 +58,15 @@ in
       }
 
       general {
-        layout = master
+        layout = dwindle
         border_size = 2
        }
+
+       bind=SUPER,RETURN,exec,'' + userSettings.term + ''
+
+       bind=SUPER,A,exec,'' + userSettings.spawnEditor + ''
+
+       bind=SUPER,S,exec,'' + userSettings.browser + ''
 
        bind=SUPER,SPACE,exec,fuzzel
        bind=SUPERSHIFT,F,fullscreen,0
@@ -73,12 +79,6 @@ in
        bind=SUPERSHIFT,T,exec,screenshot-ocr
        bind=CTRLALT,Delete,exec,hyprctl kill
        bind=SUPERSHIFT,K,exec,hyprctl kill
-
-       bind=SUPER,RETURN,exec,'' + userSettings.term + ''
-
-       bind=SUPER,A,exec,'' + userSettings.spawnEditor + ''
-
-       bind=SUPER,S,exec,'' + userSettings.browser + ''
 
        bind=SUPER,Q,killactive
        bind=SUPERSHIFT,Q,exit
@@ -151,7 +151,7 @@ in
 
        input {
          kb_layout=gb
-         kb_options=caps:nocaps
+         kb_options = ctrl:nocaps
          repeat_delay=350
          repeat_rate=50
          accel_profile=adaptive
@@ -258,8 +258,8 @@ in
             "hyprland/language": {
                 "format-en": "US",
                 "format-ru": "RU",
-            "min-length": 5,
-            "tooltip": false
+                "min-length": 5,
+                "tooltip": false
             },
 
             "keyboard-state": {
@@ -277,13 +277,11 @@ in
             },
 
             "clock": {
-                // "timezone": "America/New_York",
                 "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
                 "format": "{:%a, %d %b, %I:%M %p}"
             },
 
             "pulseaudio": {
-                // "scroll-step": 1, // %, can be a float
                 "reverse-scrolling": 1,
                 "format": "{volume}% {icon} {format_source}",
                 "format-bluetooth": "{volume}% {icon} {format_source}",
@@ -344,7 +342,7 @@ in
                 "format-plugged": "{capacity}% ",
                 "format-alt": "{time} {icon}",
                 "format-icons": ["", "", "", "", "", "", "", "", "", ""],
-            "on-update": "$HOME/.config/waybar/scripts/check_battery.sh",
+                "on-update": "$HOME/.config/waybar/scripts/check_battery.sh",
             },
 
             "tray": {

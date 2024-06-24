@@ -15,6 +15,7 @@
       wayland.enable = true;
       enableHidpi = true;
       package = pkgs.sddm;
+      theme = "${import ./sddm.nix { inherit pkgs; }}";
   };
 }
 

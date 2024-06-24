@@ -16,7 +16,7 @@
 
   home.packages = with pkgs; [
     alacritty
-    bitwarden
+    bitwarden # this is ontop of the BW CLI in system
     brave
     git
     gnumake
@@ -32,6 +32,7 @@
   ];
 
   programs.neovim = {
+    enable = true;
     viAlias = true;
     vimAlias = true;
   };

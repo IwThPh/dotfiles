@@ -9,7 +9,7 @@
     [
       ./hardware-configuration.nix
       ../../system/hardware/bluetooth.nix
-      # ../../system/hardware/power.nix
+      ../../system/hardware/power.nix
       ../../system/hardware/printing.nix
       ../../system/hardware/time.nix
       ../../system/hardware/thunderbolt.nix
@@ -18,18 +18,13 @@
       ../../system/style/stylix.nix
     ];
 
-  # Fix nix path
-  # nix.nixPath = [ "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
-  #                 "nixos-config=$HOME/dotfiles/system/configuration.nix"
-  #                 "/nix/var/nix/profiles/per-user/root/channels"
-  #               ];
-
   nix.package = pkgs.nixFlakes;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
 
-  # boot.kernelModules = [ "cpufreq_powersave" ];
+  boot.kernelModules = [ "cpufreq_powersave" ];
+  boot.kernelPackages = pkgs.linuxPackages_6_9;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -69,7 +64,6 @@
     packages = [ ];
   };
 
-
   environment.systemPackages = with pkgs; [
     bitwarden-cli
     fd
@@ -97,8 +91,6 @@
       xdg-desktop-portal-gtk
     ];
   };
-
-  # console.keyMap = "uk";
 
   # It is ok to leave this unchanged for compatibility.
   system.stateVersion = "24.05";
