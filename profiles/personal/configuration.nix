@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, lib, systemSettings, userSettings, ... }:
+{ pkgs, pkgs-unstable, lib, systemSettings, userSettings, ... }:
 
 {
   imports =
@@ -12,6 +12,7 @@
       # ../../system/hardware/power.nix
       ../../system/hardware/printing.nix
       ../../system/hardware/time.nix
+      ../../system/hardware/thunderbolt.nix
       #("../../system/wm" + ("/" + userSettings.wm) + ".nix")
       ../../system/wm/hyprland.nix
       ../../system/style/stylix.nix
@@ -74,7 +75,7 @@
   environment.systemPackages = with pkgs; [
     home-manager
     git
-    neovim
+    pkgs-unstable.neovim
     fzf
     fd
     ripgrep

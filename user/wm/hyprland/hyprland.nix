@@ -36,6 +36,9 @@ in
       exec-once = blueman-applet
       exec-once = waybar
 
+      monitor = eDP-1,2880x1800@90,0x0,1.25
+      monitor = DP-1,3440x1440@164.90,-3440x0,1
+      monitor = ,preferred,auto,1
 
       bezier = wind, 0.05, 0.9, 0.1, 1.05
       bezier = winIn, 0.1, 1.1, 0.1, 1.0
