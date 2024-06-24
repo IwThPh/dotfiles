@@ -1,14 +1,10 @@
 { config, lib, pkgs, inputs, userSettings, ... }:
 
 let
-  #themePath = "../../../themes"+("/"+userSettings.theme+"/"+userSettings.theme)+".yaml";
-  #themePolarity = lib.removeSuffix "\n" (builtins.readFile (./. + "../../../themes"+("/"+userSettings.theme)+"/polarity.txt"));
-  #backgroundUrl = builtins.readFile (./. + "../../../themes"+("/"+userSettings.theme)+"/backgroundurl.txt");
-  #backgroundSha256 = builtins.readFile (./. + "../../../themes/"+("/"+userSettings.theme)+"/backgroundsha256.txt");
-  themePath = "../../../themes/emil/emil.yaml";
-  themePolarity = lib.removeSuffix "\n" (builtins.readFile (./. + "../../../themes/emil/polarity.txt"));
-  backgroundUrl = builtins.readFile (./. + "../../../themes/emil/backgroundurl.txt");
-  backgroundSha256 = builtins.readFile (./. + "../../../themes/emil/backgroundsha256.txt");
+  themePath = "../../../themes"+("/"+userSettings.theme+"/"+userSettings.theme)+".yaml";
+  themePolarity = lib.removeSuffix "\n" (builtins.readFile (./. + "../../../themes"+("/"+userSettings.theme)+"/polarity.txt"));
+  backgroundUrl = builtins.readFile (./. + "../../../themes"+("/"+userSettings.theme)+"/backgroundurl.txt");
+  backgroundSha256 = builtins.readFile (./. + "../../../themes/"+("/"+userSettings.theme)+"/backgroundsha256.txt");
 in
 {
   imports = [ inputs.stylix.homeManagerModules.stylix ];
@@ -42,10 +38,10 @@ in
       package = pkgs.noto-fonts-monochrome-emoji;
     };
     sizes = {
-      terminal = 18;
+      terminal = 12;
       applications = 12;
       popups = 12;
-      desktop = 12;
+      desktop = 11;
     };
   };
 

@@ -40,7 +40,7 @@
         dotfilesDir = "~/dotfiles";
         wm = "hyprland";
         wmType = "wayland";
-        theme = "dawnfox";
+        theme = "carbonfox";
         browser = "brave";
         term = "alacritty";
         font = "BlexMono Nerd Font Mono";
