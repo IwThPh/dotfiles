@@ -25,7 +25,10 @@
     spotify
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  programs.neovim = {
+    viAlias = true;
+    vimAlias = true;
+  };
 
   services.syncthing.enable = true;
   xdg.enable = true;

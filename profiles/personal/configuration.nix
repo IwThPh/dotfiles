@@ -29,8 +29,6 @@
     experimental-features = nix-command flakes
   '';
 
-  nixpkgs.config.allowUnFree = true;
-
   # boot.kernelModules = [ "cpufreq_powersave" ];
 
   # Bootloader.
