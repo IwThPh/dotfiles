@@ -22,6 +22,7 @@
     syncthing
     openvpn
     slack
+    spotify
   ];
 
   nixpkgs.config.allowUnfree = true;
