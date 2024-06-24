@@ -15,23 +15,26 @@
   ];
 
   home.packages = with pkgs; [
-    zsh
     alacritty
     brave
     git
-    syncthing
+    gnumake
+    lua
+    luajitPackages.luarocks
+    php
     openvpn
     slack
     spotify
-    lua
-    luajitPackages.luarocks
-    gnumake
+    syncthing
+    zsh
   ];
 
   programs.neovim = {
     viAlias = true;
     vimAlias = true;
   };
+
+  programs.go.enable = true;
 
   services.syncthing.enable = true;
   xdg.enable = true;
