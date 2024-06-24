@@ -16,13 +16,15 @@
 
   home.packages = with pkgs; [
     alacritty
+    bitwarden
     brave
     git
     gnumake
     lua
     luajitPackages.luarocks
-    php
+    nodejs
     openvpn
+    php
     slack
     spotify
     syncthing

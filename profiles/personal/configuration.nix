@@ -71,14 +71,16 @@
 
 
   environment.systemPackages = with pkgs; [
-    home-manager
-    git
-    pkgs-unstable.neovim
-    fzf
+    bitwarden-cli
     fd
+    fzf
+    git
+    home-manager
+    pkgs-unstable.neovim
     ripgrep
     wget
     wpa_supplicant
+    unzip
     zig
   ];
 

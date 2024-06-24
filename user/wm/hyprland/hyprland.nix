@@ -5,11 +5,7 @@ in
 {
   imports = [
     ../../apps/alacritty.nix
-    #(import ../../app/dmenu-scripts/networkmanager-dmenu.nix {
-    #dmenu_command = "fuzzel -d -f ${userSettings.font} :size=16"; inherit config lib pkgs;
-    #dmenu_command = "fuzzel -d"; inherit config lib pkgs;
-    #})
-    #../input/nihongo.nix
+    (import ../../apps/networkmanager-dmenu.nix { dmenu_command = "fuzzel -d"; inherit config lib pkgs; })
   ];
 
   wayland.windowManager.hyprland = {
@@ -24,7 +20,6 @@ in
       env = XDG_CURRENT_DESKTOP,Hyprland
       env = XDG_SESSION_TYPE,wayland
       env = XDG_SESSION_DESKTOP,Hyprland
-      env = WLR_DRM_DEVICES,/dev/dri/card2:/dev/dri/card1
       env = GDK_BACKEND,wayland,x11,*
       env = QT_QPA_PLATFORM,wayland;xcb
       env = QT_QPA_PLATFORMTHEME,qt5ct
@@ -36,11 +31,15 @@ in
       exec-once = blueman-applet
       exec-once = waybar
 
+      exec-once = hypridle 
+      exec-once = sleep 5 && libinput-gestures
+      exec-once = hyprpaper
+
       monitor = eDP-1,2880x1800@90,0x0,1.25
       monitor = DP-1,3440x1440@164.90,-3440x0,1
       monitor = ,preferred,auto,1
 
-      bezier = wind, 0.05, 0.9, 0.1, 1.05
+      bezier = wind, 0.05, 0.9, 0.1, 1.0
       bezier = winIn, 0.1, 1.1, 0.1, 1.0
       bezier = winOut, 0.3, -0.3, 0, 1
       bezier = liner, 1, 1, 1, 1
@@ -60,7 +59,7 @@ in
 
       general {
         layout = master
-        border_size = 5
+        border_size = 2
        }
 
        bind=SUPER,SPACE,fullscreen,1
@@ -109,6 +108,7 @@ in
        bind=SUPER,7,focusworkspaceoncurrentmonitor,7
        bind=SUPER,8,focusworkspaceoncurrentmonitor,8
        bind=SUPER,9,focusworkspaceoncurrentmonitor,9
+       bind=SUPER,0,focusworkspaceoncurrentmonitor,10
 
        bind=SUPERSHIFT,1,movetoworkspace,1
        bind=SUPERSHIFT,2,movetoworkspace,2
@@ -119,6 +119,7 @@ in
        bind=SUPERSHIFT,7,movetoworkspace,7
        bind=SUPERSHIFT,8,movetoworkspace,8
        bind=SUPERSHIFT,9,movetoworkspace,9
+       bind=SUPERSHIFT,0,movetoworkspace,10
 
        windowrulev2 = float,class:^(Element)$
        windowrulev2 = size 85% 90%,class:^(Element)$
@@ -163,7 +164,7 @@ in
          mouse_move_enables_dpms = false
        }
        decoration {
-         rounding = 8
+         rounding = 3
          blur {
            enabled = true
            size = 5
@@ -183,37 +184,15 @@ in
 
   home.packages = (with pkgs; [
     alacritty
-    kitty
     feh
     killall
     polkit_gnome
-    nwg-launchers
     papirus-icon-theme
-    (pkgs.writeScriptBin "nwggrid-wrapper" ''
-      #!/bin/sh
-      if pgrep -x "nwggrid-server" > /dev/null
-      then
-        nwggrid -client
-      else
-        GDK_PIXBUF_MODULE_FILE=${pkgs.librsvg}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache nwggrid-server -layer-shell-exclusive-zone -1 -g adw-gtk3 -o 0.55 -b ${config.lib.stylix.colors.base00}
-      fi
-    '')
     libva-utils
     libinput-gestures
     gsettings-desktop-schemas
-    (pkgs.makeDesktopItem {
-      name = "nwggrid";
-      desktopName = "Application Launcher";
-      exec = "nwggrid-wrapper";
-      terminal = false;
-      type = "Application";
-      noDisplay = true;
-      icon = "/home/" + userSettings.username + "/.local/share/pixmaps/hyprland-logo-stylix.svg";
-    })
-    gnome.zenity
     wlr-randr
     wtype
-    ydotool
     wl-clipboard
     hyprland-protocols
     hyprpicker
@@ -221,7 +200,6 @@ in
     hyprpaper
     fnott
     fuzzel
-    keepmenu
     pinentry-gnome3
     wev
     grim
@@ -245,28 +223,6 @@ in
       tesseract $imgname $txtname;
       wl-copy -n < $txtfname
     '')
-    (pkgs.writeScriptBin "nwg-dock-wrapper" ''
-      #!/bin/sh
-      if pgrep -x ".nwg-dock-hyprl" > /dev/null
-      then
-        nwg-dock-hyprland
-      else
-        nwg-dock-hyprland -f -x -i 64 -nolauncher -a start -ml 8 -mr 8 -mb 8
-      fi
-    '')
-    (pkgs.writeScriptBin "hypr-element-start" ''
-      #!/usr/bin/env sh
-      sleep 6 && element-desktop --hidden
-    '')
-    (pkgs.writeScriptBin "hypr-element" ''
-      #!/bin/sh
-      if hyprctl clients | grep "class: Element" > /dev/null
-      then
-        hyprctl dispatch closewindow Element
-      else
-        element-desktop
-      fi
-    '')
     (pkgs.writeScriptBin "sct" ''
       #!/bin/sh
       killall wlsunset &> /dev/null;
@@ -277,23 +233,6 @@ in
       else
         killall wlsunset &> /dev/null;
       fi
-    '')
-    (pkgs.writeScriptBin "obs-notification-mute-daemon" ''
-      #!/bin/sh
-      while true; do
-        if pgrep -x .obs-wrapped > /dev/null;
-          then
-            pkill -STOP fnott;
-          else
-            pkill -CONT fnott;
-        fi
-        sleep 10;
-      done
-    '')
-    (pkgs.writeScriptBin "suspend-unless-render" ''
-      #!/bin/sh
-      if pgrep -x nixos-rebuild > /dev/null || pgrep -x home-manager > /dev/null || pgrep -x kdenlive > /dev/null || pgrep -x FL64.exe > /dev/null || pgrep -x blender > /dev/null || pgrep -x flatpak > /dev/null;
-      then echo "Shouldn't suspend"; sleep 10; else echo "Should suspend"; systemctl suspend; fi
     '')
     ]);
 
