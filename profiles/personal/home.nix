@@ -21,7 +21,10 @@
     git
     syncthing
     openvpn
+    slack
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   services.syncthing.enable = true;
   xdg.enable = true;
