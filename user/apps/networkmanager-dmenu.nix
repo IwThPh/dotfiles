@@ -12,7 +12,7 @@
     list_saved = True
 
     [editor]
-    terminal = '' userSettings.term ''
+    terminal = ''+userSettings.term+''
     # gui_if_available = <True or False> (Default: True)
   '';
 }

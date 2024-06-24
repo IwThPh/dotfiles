@@ -5,7 +5,7 @@ in
 {
   imports = [
     ../../apps/alacritty.nix
-    (import ../../apps/networkmanager-dmenu.nix { dmenu_command = "fuzzel -d"; inherit config lib pkgs; })
+    (import ../../apps/networkmanager-dmenu.nix { dmenu_command = "fuzzel -d"; inherit config lib pkgs userSettings; })
   ];
 
   wayland.windowManager.hyprland = {
@@ -62,7 +62,7 @@ in
         border_size = 2
        }
 
-       bind=SUPER,SPACE,fullscreen,1
+       bind=SUPER,SPACE,exec,fuzzel
        bind=SUPERSHIFT,F,fullscreen,0
        bind=SUPER,Y,workspaceopt,allfloat
        bind=ALT,TAB,cyclenext
