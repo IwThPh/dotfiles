@@ -14,6 +14,7 @@
       ../../system/hardware/time.nix
       ../../system/hardware/thunderbolt.nix
       #("../../system/wm" + ("/" + userSettings.wm) + ".nix")
+      ( import ../../system/app/docker.nix {storageDriver = null; inherit pkgs userSettings lib;} )
       ../../system/wm/hyprland.nix
       ../../system/style/stylix.nix
     ];
