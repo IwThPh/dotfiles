@@ -38,13 +38,15 @@ in
       package = pkgs.noto-fonts-monochrome-emoji;
     };
     sizes = {
-      terminal = 12;
+      terminal = 11;
       applications = 12;
-      popups = 12;
-      desktop = 11;
+      popups = 11;
+      desktop = 10;
     };
   };
-
+  stylix.targets.kde.enable = true;
+  stylix.targets.kitty.enable = true;
+  stylix.targets.gtk.enable = true;
   stylix.targets.alacritty.enable = false;
   programs.alacritty.settings = {
     colors = {
@@ -74,11 +76,28 @@ in
     };
     font.size = config.stylix.fonts.sizes.terminal;
     font.normal.family = userSettings.font;
+    window.padding.x = 8;
+    window.padding.y = 8;
   };
 
-  #fonts.fontconfig.defaultFonts = {
-    #monospace = [ userSettings.font ];
-    #sansSerif = [ userSettings.font ];
-    #serif = [ userSettings.font ];
-  #};
+  home.file.".config/hypr/hyprpaper.conf".text = ''
+    preload = ''+config.stylix.image+''
+    wallpaper = ,''+config.stylix.image+''
+  '';
+
+  home.packages = with pkgs; [
+     libsForQt5.qt5ct pkgs.libsForQt5.breeze-qt5 libsForQt5.breeze-icons pkgs.noto-fonts-monochrome-emoji
+  ];
+  qt = {
+    enable = true;
+    style.package = pkgs.libsForQt5.breeze-qt5;
+    style.name = "breeze-dark";
+    platformTheme.name = "kde";
+  };
+
+  fonts.fontconfig.defaultFonts = {
+    monospace = [ userSettings.font ];
+    sansSerif = [ userSettings.font ];
+    serif = [ userSettings.font ];
+  };
 }

@@ -68,7 +68,7 @@
       };
 
       nixosConfigurations = {
-        iwanp = lib.nixosSystem {
+        system = lib.nixosSystem {
           system = systemSettings.system;
 
           modules = [
@@ -94,6 +94,16 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland = {
+      type = "git";
+      url = "https://github.com/hyprwm/Hyprland";
+      submodules = true;
+      rev = "4dd2b5902e770eeaf84820eccfebb5451aedb6a5";
+    };
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+    hycov.url = "github:DreamMaoMao/hycov/6748bde85fa3a4f82cf8b038a6538f12f9f27428";
+    hycov.inputs.hyprland.follows = "hyprland";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";

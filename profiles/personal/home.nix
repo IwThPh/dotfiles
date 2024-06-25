@@ -31,6 +31,9 @@
     zsh
   ];
 
+  programs.k9s.enable = true;
+  programs.zellij.enable = true;
+
   programs.neovim = {
     enable = false;
     viAlias = true;

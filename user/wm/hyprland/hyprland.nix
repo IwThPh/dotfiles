@@ -8,10 +8,18 @@ in
     (import ../../apps/networkmanager-dmenu.nix { dmenu_command = "fuzzel -d"; inherit config lib pkgs userSettings; })
   ];
 
+  gtk.cursorTheme = {
+    package = pkgs.quintom-cursor-theme;
+    name = if (config.stylix.polarity == "light") then "Quintom_Ink" else "Quintom_Snow";
+    size = 36;
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
-    package = pkgs.hyprland;
-    plugins = [ ];
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    plugins = [ 
+      inputs.hycov.packages.${pkgs.system}.hycov
+    ];
     settings = { };
     extraConfig = ''
       exec-once = dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
@@ -75,6 +83,11 @@ in
        bind=ALT,TAB,bringactivetotop
        bind=ALTSHIFT,TAB,cyclenext,prev
        bind=ALTSHIFT,TAB,bringactivetotop
+       bind=SUPER,TAB,hycov:toggleoverview
+       bind=SUPER,left,hycov:movefocus,leftcross
+       bind=SUPER,right,hycov:movefocus,rightcross
+       bind=SUPER,up,hycov:movefocus,upcross
+       bind=SUPER,down,hycov:movefocus,downcross
        bind=SUPER,V,exec,wl-copy $(wl-paste | tr '\n' ' ')
        bind=SUPERSHIFT,T,exec,screenshot-ocr
        bind=CTRLALT,Delete,exec,hyprctl kill
@@ -236,6 +249,12 @@ in
       fi
     '')
     ]);
+
+    home.file.".config/libinput-gestures.conf".text = ''
+      gesture swipe up 3	hyprctl dispatch hycov:toggleoverview
+      '';
+      # gesture swipe right 3 workspace-1	
+      # gesture swipe left 3 workspace+1	
 
     home.file.".config/waybar/config".text = ''
         {
