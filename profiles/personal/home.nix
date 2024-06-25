@@ -17,7 +17,12 @@
   home.packages = with pkgs; [
     alacritty
     bitwarden # this is ontop of the BW CLI in system
-    brave
+    btop
+    (pkgs.vivaldi.overrideAttrs (oldAttrs: {
+      dontWrapQtApps = false;
+      dontPatchELF = true;
+      nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.kdePackages.wrapQtAppsHook ];
+    }))
     git
     gnumake
     lua

@@ -11,7 +11,7 @@ in
   gtk.cursorTheme = {
     package = pkgs.quintom-cursor-theme;
     name = if (config.stylix.polarity == "light") then "Quintom_Ink" else "Quintom_Snow";
-    size = 36;
+    size = 28;
   };
 
   wayland.windowManager.hyprland = {
@@ -43,8 +43,8 @@ in
       exec-once = sleep 5 && libinput-gestures
       exec-once = hyprpaper
 
-      monitor = eDP-1,2880x1800@90,0x0,2
-      monitor = DP-1,3440x1440@164.90,-3440x0,1,bitdepth,10
+      monitor = eDP-1,2880x1800@90,3440x0,2
+      monitor = DP-1,3440x1440@164.90,0x0,1,bitdepth,10
       monitor = ,preferred,auto,1
 
       bezier = wind, 0.05, 0.9, 0.1, 1.0

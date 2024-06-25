@@ -41,7 +41,7 @@
         wm = "hyprland";
         wmType = "wayland";
         theme = "carbonfox";
-        browser = "brave";
+        browser = "vivaldi";
         term = "alacritty";
         font = "BlexMono Nerd Font Mono";
         fontPkg = pkgs.nerdfonts;
