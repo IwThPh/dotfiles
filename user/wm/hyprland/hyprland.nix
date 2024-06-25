@@ -103,6 +103,22 @@ in
       bindl=,switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1, disable"
       bind=SUPERCTRL,L,exec,loginctl lock-session
 
+      bind= ,xf86audiomute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+      bind= ,xf86audioraisevolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+      bind= ,xf86audiolowervolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+      bind= ,xf86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+      # bind= ,xf86Display, exec, todo
+      # bind= ,xf86WLAN, exec, already bound via applet?
+      # bind= ,xf86KbdBrightnessDown, exec, todo
+      # bind= ,xf86KbdBrightnessUp, exec, todo
+      # bind= ,xf86MonBrightnessDown, exec, todo
+      # bind= ,xf86MonBrightnessUp, exec, todo
+      # bind= ,XF86NotificationCenter, exec, todo
+      # bind= ,XF86PickupPhone, exec, todo
+      # bind= ,XF86HangupPhone, exec, todo
+      # bind= ,XF86Favorites, exec, todo
+      bind= ,XF86SelectiveScreenshot, exec, screenshot-ocr
+
       bind=SUPER,H,movefocus,l
       bind=SUPER,J,movefocus,d
       bind=SUPER,K,movefocus,u
