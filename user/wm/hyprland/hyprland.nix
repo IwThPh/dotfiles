@@ -43,7 +43,7 @@ in
       exec-once = sleep 5 && libinput-gestures
       exec-once = hyprpaper
 
-      monitor = eDP-1,2880x1800@90,0x0,1.25
+      monitor = eDP-1,2880x1800@90,0x0,2
       monitor = DP-1,3440x1440@164.90,-3440x0,1,bitdepth,10
       monitor = ,preferred,auto,1
 
@@ -206,6 +206,7 @@ in
     libinput-gestures
     gsettings-desktop-schemas
     wlr-randr
+    wlr-layout-ui # Monitor UI
     wtype
     wl-clipboard
     hyprland-protocols
@@ -579,18 +580,28 @@ in
     programs.fuzzel.enable = true;
     programs.fuzzel.settings = {
       main = {
-        # prompt = "";
-        font = userSettings.font + ":size=14";
+        prompt = "'◉  '";
+        font = userSettings.font + ":size=12";
         dpi-aware = "yes";
         terminal = userSettings.term;
+        lines = 10;
+        width = 45;
+        horizontal-pad = 8;
+        vertical-pad = 0;
+        inner-pad = 0;
+        line-height = 20;
       };
       colors = {
         background = config.lib.stylix.colors.base00 + "e6";
-        text = config.lib.stylix.colors.base03 + "ff";
-        match = config.lib.stylix.colors.base03 + "ff";
+        text = config.lib.stylix.colors.base05 + "ff";
+        match = config.lib.stylix.colors.base08 + "ff";
+        selection = config.lib.stylix.colors.base03 + "ff";
+        selection-text = config.lib.stylix.colors.base0A + "ff";
+        selection-match = config.lib.stylix.colors.base0F + "ff";
+        border = config.lib.stylix.colors.base05 + "e6";
       };
       border = {
-        width = 3;
+        width = 2;
         radius = 3;
       };
     };

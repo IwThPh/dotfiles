@@ -5,6 +5,12 @@ let
   themePolarity = lib.removeSuffix "\n" (builtins.readFile (./. + "../../../themes"+("/"+userSettings.theme)+"/polarity.txt"));
   backgroundUrl = builtins.readFile (./. + "../../../themes"+("/"+userSettings.theme)+"/backgroundurl.txt");
   backgroundSha256 = builtins.readFile (./. + "../../../themes/"+("/"+userSettings.theme)+"/backgroundsha256.txt");
+
+  # wallpaper = pkgs.runCommand "image.png" {} ''
+  #       COLOR=$(${pkgs.yq}/bin/yq -r .base00 ${theme})
+  #       COLOR="#"$COLOR
+  #       ${pkgs.imagemagick}/bin/magick convert -size 3440x1440 xc:$COLOR $out
+  # '';
 in
 {
   imports = [ inputs.stylix.homeManagerModules.stylix ];
@@ -47,6 +53,7 @@ in
   stylix.targets.kde.enable = true;
   stylix.targets.kitty.enable = true;
   stylix.targets.gtk.enable = true;
+  # stylix.targets.chromium.enable = true;
   stylix.targets.alacritty.enable = false;
   programs.alacritty.settings = {
     colors = {

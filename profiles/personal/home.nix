@@ -27,7 +27,7 @@
     php
     slack
     spotify
-    jetbrains-toolbox
+    jetbrains.rider
     syncthing
     zsh
   ];
