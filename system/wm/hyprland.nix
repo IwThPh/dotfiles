@@ -24,5 +24,11 @@ in
       portalPackage = pkgs-hyprland.xdg-desktop-portal-hyprland;
     };
   };
+
+  environment = {
+    plasma5.excludePackages = [ pkgs.kdePackages.systemsettings ];
+    plasma6.excludePackages = [ pkgs.kdePackages.systemsettings ];
+  };
+  services.xserver.excludePackages = [ pkgs.xterm ];
 }
 
