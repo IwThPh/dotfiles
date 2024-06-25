@@ -180,7 +180,7 @@ in
       }
 
       input {
-        kb_layout=gb
+        kb_layout=us
         kb_options = ctrl:nocaps
         repeat_delay=350
         repeat_rate=50
@@ -289,6 +289,12 @@ in
       }
 
       listener {
+          timeout = 330                               # 5.5min
+          on-timeout = hyprctl dispatch dpms off      # screen off when timeout has passed
+          on-resume = hyprctl dispatch dpms on        # screen on when activity is detected after timeout has fired.
+      }
+
+      listener {
           timeout = 1800 # in seconds
           on-timeout = systemctl suspend
       }
@@ -309,19 +315,6 @@ in
         brightness = 0.8172
         vibrancy = 0.1696
         vibrancy_darkness = 0.0
-      }
-
-      image {
-        monitor =
-        path = ''+config.stylix.image+''
-        size = 150 # lesser side if not 1:1 ratio
-        rounding = -1 # negative values mean circle
-        border_size = 0
-        rotate = 0 # degrees, counter-clockwise
-
-        position = 0, 200
-        halign = center
-        valign = center
       }
 
       input-field {
@@ -364,7 +357,7 @@ in
         rotate = 0 # degrees, counter-clockwise
         position = 0, 160
         halign = center
-        valign = top
+        valign = center
       }
 
       label {
@@ -391,54 +384,20 @@ in
 
           "modules-left": [ "hyprland/workspaces", "hyprland/keyboard-state", "hyprland/window" ],
           "modules-center": [ ],
-          "modules-right": [
-            "tray",
-            // "mpd",
-            // "idle_inhibitor",
-            "wireplumber",
-            "network",
-            "cpu",
-            "memory",
-            // "temperature",
-            // "backlight",
-            // "keyboard-state",
-            "battery",
-            "clock"
-          ],
+          "modules-right": [ "tray", "wireplumber", "network", "cpu", "memory", "backlight", "battery", "clock" ],
+
           // Modules configuration
           "hyprland/workspaces": {
               "disable-scroll": false,
               "all-outputs": true,
               "warp-on-scroll": false
           },
-          "keyboard-state": {
-            "numlock": true,
-            "capslock": true,
-            "format": "{name} {icon}",
-            "format-icons": {
-              "locked": "",
-              "unlocked": ""
-            }
-          },
-          "sway/mode": {
-            "format": "<span style=\"italic\">{}</span>"
-          },
-          "/scratchpad": {
-            "format": "{icon} {count}",
-            "show-empty": false,
-            "format-icons": [
-              "",
-              ""
-            ],
-            "tooltip": true,
-            "tooltip-format": "{app}: {title}"
-          },
           "tray": {
             // "icon-size": 21,
             "spacing": 10
           },
           "clock": {
-            // "timezone": "America/New_York",
+            "timezone": "Europe/London",
             "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
             "format-alt": "{:%Y-%m-%d}"
           },
@@ -448,18 +407,6 @@ in
           },
           "memory": {
             "format": "{}% "
-          },
-          "temperature": {
-            // "thermal-zone": 2,
-            // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-            "critical-threshold": 80,
-            // "format-critical": "{temperatureC}°C {icon}",
-            "format": "{temperatureC}°C {icon}",
-            "format-icons": [
-              "",
-              "",
-              ""
-            ]
           },
           "backlight": {
             // "device": "acpi_video1",
