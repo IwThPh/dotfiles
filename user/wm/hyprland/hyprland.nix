@@ -375,8 +375,7 @@ in
     programs.waybar = {
         enable = true;
         package = pkgs.waybar;
-        settings = {
-        };
+        settings = { };
         style = ''
             * {
                 border: none;
@@ -399,7 +398,7 @@ in
                 margin-right: 8px;
                 border-radius: 10px;
                 transition: none;
-                background: #383c4a;
+                background-color: rgba('' + config.lib.stylix.colors.base00-rgb-r + "," + config.lib.stylix.colors.base00-rgb-g + "," + config.lib.stylix.colors.base00-rgb-b + "," + ''0.55);
             }
 
             #workspaces button {
@@ -437,7 +436,7 @@ in
                 border-radius: 10px 0px 0px 10px;
                 transition: none;
                 color: #ffffff;
-                background: #383c4a;
+                background-color: rgba('' + config.lib.stylix.colors.base00-rgb-r + "," + config.lib.stylix.colors.base00-rgb-g + "," + config.lib.stylix.colors.base00-rgb-b + "," + ''0.55);
             }
 
             #keyboard-state {
@@ -571,61 +570,69 @@ in
                     color: #000000;
                 }
             }
-          '';
-  };
+        '';
+    };
 
     services.udiskie.enable = true;
     services.udiskie.tray = "always";
+
     programs.fuzzel.enable = true;
     programs.fuzzel.settings = {
-    main = {
-      font = userSettings.font + ":size=20";
-      dpi-aware = "no";
-      show-actions = "yes";
-      terminal = "${pkgs.alacritty}/bin/alacritty";
+      main = {
+        # prompt = "";
+        font = userSettings.font + ":size=14";
+        dpi-aware = "yes";
+        terminal = userSettings.term;
+      };
+      colors = {
+        background = config.lib.stylix.colors.base00 + "e6";
+        text = config.lib.stylix.colors.base03 + "ff";
+        match = config.lib.stylix.colors.base03 + "ff";
+      };
+      border = {
+        width = 3;
+        radius = 3;
+      };
     };
-    border = {
-      width = 3;
-      radius = 7;
-    };
-  };
+
     services.fnott.enable = true;
     services.fnott.settings = {
-    main = {
-      anchor = "bottom-right";
-      stacking-order = "top-down";
-      min-width = 400;
-      title-font = userSettings.font + ":size=14";
-      summary-font = userSettings.font + ":size=12";
-      body-font = userSettings.font + ":size=11";
-      border-size = 0;
-    };
-    low = {
-      background = config.lib.stylix.colors.base00 + "e6";
-      title-color = config.lib.stylix.colors.base03 + "ff";
-      summary-color = config.lib.stylix.colors.base03 + "ff";
-      body-color = config.lib.stylix.colors.base03 + "ff";
-      idle-timeout = 150;
-      max-timeout = 30;
-      default-timeout = 8;
-    };
-    normal = {
-      background = config.lib.stylix.colors.base00 + "e6";
-      title-color = config.lib.stylix.colors.base07 + "ff";
-      summary-color = config.lib.stylix.colors.base07 + "ff";
-      body-color = config.lib.stylix.colors.base07 + "ff";
-      idle-timeout = 150;
-      max-timeout = 30;
-      default-timeout = 8;
-    };
-    critical = {
-      background = config.lib.stylix.colors.base00 + "e6";
-      title-color = config.lib.stylix.colors.base08 + "ff";
-      summary-color = config.lib.stylix.colors.base08 + "ff";
-      body-color = config.lib.stylix.colors.base08 + "ff";
-      idle-timeout = 0;
-      max-timeout = 0;
-      default-timeout = 0;
-    };
+      main = {
+        anchor = "bottom-right";
+        stacking-order = "top-down";
+        min-width = 400;
+        title-font = userSettings.font + ":size=14";
+        summary-font = userSettings.font + ":size=12";
+        body-font = userSettings.font + ":size=11";
+        border-size = 0;
+      };
+      low = {
+        background = config.lib.stylix.colors.base00 + "e6";
+        title-color = config.lib.stylix.colors.base03 + "ff";
+        summary-color = config.lib.stylix.colors.base03 + "ff";
+        body-color = config.lib.stylix.colors.base03 + "ff";
+        idle-timeout = 150;
+        max-timeout = 30;
+        default-timeout = 8;
+      };
+      normal = {
+        background = config.lib.stylix.colors.base00 + "e6";
+        title-color = config.lib.stylix.colors.base07 + "ff";
+        summary-color = config.lib.stylix.colors.base07 + "ff";
+        body-color = config.lib.stylix.colors.base07 + "ff";
+        idle-timeout = 150;
+        max-timeout = 30;
+        default-timeout = 8;
+      };
+      critical = {
+        background = config.lib.stylix.colors.base00 + "e6";
+        title-color = config.lib.stylix.colors.base08 + "ff";
+        summary-color = config.lib.stylix.colors.base08 + "ff";
+        body-color = config.lib.stylix.colors.base08 + "ff";
+        idle-timeout = 0;
+        max-timeout = 0;
+        default-timeout = 0;
+      };
   };
-    }
+
+}
