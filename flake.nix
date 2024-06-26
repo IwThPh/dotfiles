@@ -13,6 +13,8 @@
           allowUnfree = true;
           allowUnfreePredicate = (_: true);
         };
+        # Only supported on unstable currently
+        # overlays = [ inputs.rust-overlay.overlays.default ]; 
       });
       
       pkgs-unstable = (import inputs.nixpkgs-unstable {
@@ -21,6 +23,7 @@
           allowUnfree = true;
           allowUnfreePredicate = (_: true);
         };
+        overlays = [ inputs.rust-overlay.overlays.default ];
       });
 
       systemSettings = {
@@ -35,7 +38,7 @@
 
       userSettings = rec {
         username = "iwanp";
-        name = "Iwan";
+        name = "Iwan Phillips";
         email = "iwan@iwanphillips.dev";
         dotfilesDir = "~/dotfiles";
         wm = "hyprland";
@@ -53,10 +56,7 @@
       homeConfigurations = {
         user = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-
-          modules = [
-            (./. + "/profiles" + ("/" + systemSettings.profile) + "/home.nix")
-          ];
+          modules = [ (./. + "/profiles" + ("/" + systemSettings.profile) + "/home.nix") ];
 
           extraSpecialArgs = {
             inherit pkgs-unstable;
@@ -70,11 +70,7 @@
       nixosConfigurations = {
         system = lib.nixosSystem {
           system = systemSettings.system;
-
-          modules = [
-            # (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
-            ./profiles/personal/configuration.nix
-          ];
+          modules = [ (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix") ];
 
           specialArgs = {
             inherit pkgs-unstable;

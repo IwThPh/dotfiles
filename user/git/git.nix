@@ -7,8 +7,8 @@
     enable = true;
     extraConfig = {
       user = {
-        name = "Iwan Phillips";
-        email = "iwan@iwanphillips.dev";
+        name = userSettings.name;
+        email = userSettings.email;
       };
       checkout = {
         defaultRemote = "origin";

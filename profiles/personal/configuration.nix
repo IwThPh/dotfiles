@@ -14,8 +14,8 @@
       ../../system/hardware/time.nix
       ../../system/hardware/thunderbolt.nix
       #("../../system/wm" + ("/" + userSettings.wm) + ".nix")
-      ( import ../../system/app/docker.nix {storageDriver = null; inherit pkgs userSettings lib;} )
       ../../system/wm/hyprland.nix
+      ( import ../../system/app/docker.nix {storageDriver = null; inherit pkgs userSettings lib;} )
       ../../system/style/stylix.nix
     ];
 
@@ -71,6 +71,7 @@
     fzf
     git
     home-manager
+    pkgs-unstable.rust-bin.stable.latest.default
     pkgs-unstable.neovim
     ripgrep
     wget
