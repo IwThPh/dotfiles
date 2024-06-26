@@ -73,6 +73,7 @@
     home-manager
     pkgs-unstable.rust-bin.stable.latest.default
     pkgs-unstable.neovim
+    tree-sitter
     ripgrep
     wget
     wpa_supplicant

@@ -30,17 +30,26 @@
     nodejs
     openvpn
     php
+    yq
+    jq
     slack
     spotify
     jetbrains.rider
     syncthing
     zsh
+    (pkgs.writeScriptBin "zcc" ''
+      #!/bin/sh
+      ${pkgs.zig}/bin/zig cc $@
+    '')
   ];
-
-
 
   programs.k9s.enable = true;
   programs.zellij.enable = true;
+
+  home.file.".cargo/config.toml".text = ''
+    [target.x86_64-unknown-linux-gnu]
+    linker="zcc"
+  '';
 
   programs.neovim = {
     enable = false;
