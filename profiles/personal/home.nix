@@ -25,7 +25,7 @@
     }))
     git
     gnumake
-    lua
+    lua5_1 # neovim runs with lua 5.1 and luajit. Required for treesitter parsers and neorg
     luajitPackages.luarocks
     nodejs
     openvpn
@@ -36,6 +36,8 @@
     syncthing
     zsh
   ];
+
+
 
   programs.k9s.enable = true;
   programs.zellij.enable = true;

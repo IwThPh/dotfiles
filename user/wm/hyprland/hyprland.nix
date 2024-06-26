@@ -254,6 +254,12 @@ in
       tesseract $imgname $txtname;
       wl-copy -n < $txtfname
     '')
+    (pkgs.writeScriptBin "laptop-lid-check" ''
+      #!/bin/sh
+      if grep closed /proc/acpi/button/lid/LID/state &> /dev/null; then
+        wlr-randr --output eDP-1 --off &> /dev/null;
+      fi
+    '')
     (pkgs.writeScriptBin "sct" ''
       #!/bin/sh
       killall wlsunset &> /dev/null;
