@@ -12,6 +12,7 @@
     # ../../user/shell/sh.nix
     ../../user/git/git.nix
     ../../user/style/stylix.nix
+    ../../user/shell/devshells.nix
   ];
 
   home.packages = with pkgs; [
@@ -29,7 +30,6 @@
     luajitPackages.luarocks
     nodejs
     openvpn
-    php
     yq
     jq
     slack

@@ -23,7 +23,7 @@ in
 
   services.greetd = {
     enable = true;
-    settings = rec {
+    settings = {
       default_session = {
         command = ''${lib.makeBinPath [ pkgs.greetd.tuigreet ]}/tuigreet -r --asterisks --time \
                     --cmd ${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/Hyprland'';

@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, userSettings, systemSettings, ... }:
+{ inputs, config, lib, pkgs, userSettings, ... }:
 let
   pkgs-hyprland = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
@@ -35,6 +35,9 @@ in
       env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
       env = CLUTTER_BACKEND,wayland
 
+      env = GDK_SCALE,2
+      env = QT_ENABLE_HIGHDPI_SCALING,1
+
       exec-once = nm-applet
       exec-once = blueman-applet
       exec-once = waybar
@@ -68,6 +71,12 @@ in
       general {
         layout = dwindle
         border_size = 2
+      }
+
+      dwindle {
+        preserve_split = true
+        smart_split = true
+        force_split = 2
       }
 
       bind=SUPER,RETURN,exec,'' + userSettings.term + ''
@@ -152,20 +161,15 @@ in
       bind=SUPERSHIFT,0,movetoworkspace,10
 
       windowrulev2 = float,class:^(Element)$
-      windowrulev2 = size 85% 90%,class:^(Element)$
+      windowrulev2 = size 95% 95%,class:^(Element)$
       windowrulev2 = center,class:^(Element)$
+
+      windowrulev2 = stayfocused,class:^(jetbrains-.*)
 
       $savetodisk = title:^(Save to Disk)$
       windowrulev2 = float,$savetodisk
       windowrulev2 = size 70% 75%,$savetodisk
       windowrulev2 = center,$savetodisk
-
-      $pavucontrol = class:^(pavucontrol)$
-      windowrulev2 = float,$pavucontrol
-      windowrulev2 = size 86% 40%,$pavucontrol
-      windowrulev2 = move 50% 6%,$pavucontrol
-      windowrulev2 = workspace special silent,$pavucontrol
-      windowrulev2 = opacity 0.80,$pavucontrol
 
       bind=SUPER,I,exec,networkmanager_dmenu
       bind=SUPER,P,exec,keepmenu
@@ -181,7 +185,7 @@ in
 
       input {
         kb_layout=us
-        kb_options = ctrl:nocaps
+        kb_options=ctrl:nocaps
         repeat_delay=350
         repeat_rate=50
         accel_profile=adaptive
@@ -193,6 +197,7 @@ in
         disable_hyprland_logo = true
         mouse_move_enables_dpms = false
       }
+
       decoration {
         rounding = 3
         blur {
@@ -206,7 +211,6 @@ in
           xray = true
         }
       }
-
     '';
     xwayland = { enable = true; };
     systemd.enable = true;
