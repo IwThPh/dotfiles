@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, userSettings, ... }: let
+{ inputs, pkgs, ... }: let
   pkgs-hyprland = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
@@ -16,19 +16,6 @@ in
         enable = true;
       };
       portalPackage = pkgs-hyprland.xdg-desktop-portal-hyprland;
-    };
-  };
-
-  security.pam.services.greetd.enableGnomeKeyring = true;
-
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = ''${lib.makeBinPath [ pkgs.greetd.tuigreet ]}/tuigreet -r --asterisks --time \
-                    --cmd ${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/Hyprland'';
-        user = userSettings.username;
-      };
     };
   };
 

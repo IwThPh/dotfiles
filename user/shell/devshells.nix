@@ -1,9 +1,11 @@
 { pkgs, ... }:
 let
-  laravel = (import ./laravel.nix { inherit pkgs; });
+  laravel = (import ./laravel8_3.nix { inherit pkgs; });
 in
 {
-  environment.systemPackages = [
-    (pkgs.writeScriptBin "zsh-laravel8_3" ''${pkgs.zsh} --init-file ${laravel}'' )
+  home.packages = [
+    (pkgs.writeScriptBin "zsh-laravel-php8-3" ''
+      nix-shell --shell ${pkgs.zsh}/bin/zsh --init-file ${laravel}
+    '' )
   ];
 }

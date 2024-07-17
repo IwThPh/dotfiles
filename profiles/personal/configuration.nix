@@ -27,6 +27,11 @@
   boot.kernelModules = [ "cpufreq_powersave" ];
   boot.kernelPackages = pkgs.linuxPackages_6_9;
 
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_instances"= 1024;
+    "fs.inotify.max_user_watches"= 1048576;
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -35,6 +40,20 @@
   # Networking
   networking.hostName = systemSettings.hostname;
   networking.networkmanager.enable = true;
+  networking.hosts = {
+    "127.0.0.1" = [
+      "cofeportal.local"
+      "cms.cofeportal.local"
+      "cmsapi.cofeportal.local"
+      "changemydetails.cofeportal.local"
+      "mail.cofeportal.local"
+
+      "heidi.local"
+      "jura.heidi.local"
+      "maude.heidi.local"
+      "my-booking.heidi.local"
+    ];
+  };
 
   # Set your time zone.
   time.timeZone = systemSettings.timezone;
@@ -65,13 +84,21 @@
     packages = [ ];
   };
 
+  # Enable nix ld
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    curl
+    glib
+    stdenv.cc.cc
+  ];
+
   environment.systemPackages = with pkgs; [
     bitwarden-cli
     fd
     fzf
     git
     home-manager
-    pkgs-unstable.rust-bin.stable.latest.default
+    (pkgs-unstable.rust-bin.stable.latest.default)
     pkgs-unstable.neovim
     tree-sitter
     ripgrep
@@ -80,6 +107,8 @@
     unzip
     zig
   ];
+
+  environment.sessionVariables.NIXOS_OZONE_WL=1;
 
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
@@ -93,9 +122,10 @@
     enable = true;
     configPackages = with pkgs; [
       xdg-desktop-portal
-      xdg-desktop-portal-gtk
     ];
   };
+
+  nix.settings.auto-optimise-store = true;
 
   # It is ok to leave this unchanged for compatibility.
   system.stateVersion = "24.05";

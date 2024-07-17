@@ -1,5 +1,5 @@
-# alias art='php artisan'
-# alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
+alias art='php artisan'
+alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 
 # alias -g phpstan='docker run -v $PWD:/app --rm ghcr.io/phpstan/phpstan'
 

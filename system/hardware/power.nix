@@ -15,6 +15,9 @@
       CPU_MIN_PERF_ON_BAT = 0;
       CPU_MAX_PERF_ON_BAT = 100;
 
+      # INTEL_GPU_MIN_FREQ_ON_AC=500;
+      # INTEL_GPU_MIN_FREQ_ON_BAT=500;
+
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;
 
