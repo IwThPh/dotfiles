@@ -16,9 +16,7 @@
   ];
 
   home.packages = with pkgs; [
-    alacritty
-    bitwarden # this is ontop of the BW CLI in system
-    btop
+    #bitwarden # this is ontop of the BW CLI in system
     (pkgs.vivaldi.overrideAttrs (oldAttrs: {
       dontWrapQtApps = false;
       dontPatchELF = true;
@@ -30,60 +28,53 @@
       runtime_6_0
       runtime_8_0
     ])
-    gh
-    git
-    gparted
-    xorg.xhost
-    gnumake
-    lua5_1 # neovim runs with lua 5.1 and luajit. Required for treesitter parsers and neorg
-    luajitPackages.luarocks
-    nodejs
-    openvpn
-    discord
+    #gh
+    #lua5_1 # neovim runs with lua 5.1 and luajit. Required for treesitter parsers and neorg
+    #luajitPackages.luarocks
+    #nodejs
+    #openvpn
+    #discord
     yq
-    jq
-    slack
-    postman
-    spotify
-    pkgs-unstable.bruno
-    (let 
-      extra-path = with pkgs; [
-        (with dotnetCorePackages; combinePackages [
-          sdk_6_0
-          sdk_8_0
-          runtime_6_0
-          runtime_8_0
-        ])
-        dotnetPackages.Nuget
-        mono
-        msbuild
-      ];
-
-      extra-lib = with pkgs;[
-      ];
-
-      rider = pkgs.jetbrains.rider.overrideAttrs (attrs: {
-        postInstall = ''
-          # Wrap rider with extra tools and libraries
-          mv $out/bin/rider $out/bin/.rider-toolless
-          makeWrapper $out/bin/.rider-toolless $out/bin/rider \
-            --argv0 rider \
-            --prefix PATH : "${lib.makeBinPath extra-path}" \
-            --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extra-lib}"
-
-          # Our rider binary is at $out/bin/rider, so we need to link $out/rider/ to $out/
-          shopt -s extglob
-          ln -s $out/rider/!(bin) $out/
-          shopt -u extglob
-        '' + attrs.postInstall or "";
-      });
-    in 
-      rider
-    )
-    beekeeper-studio
-    lazydocker
-    lazygit
-    syncthing
+    #slack
+    #postman
+    #spotify
+    #pkgs-unstable.bruno
+    #(let 
+      #extra-path = with pkgs; [
+        #(with dotnetCorePackages; combinePackages [
+          #sdk_6_0
+          #sdk_8_0
+          #runtime_6_0
+          #runtime_8_0
+        #])
+        #dotnetPackages.Nuget
+        #mono
+        #msbuild
+      #];
+      #extra-lib = with pkgs;[
+      #];
+      #rider = pkgs.jetbrains.rider.overrideAttrs (attrs: {
+        #postInstall = ''
+          ## Wrap rider with extra tools and libraries
+          ##mv $out/bin/rider $out/bin/.rider-toolless
+          #makeWrapper $out/bin/.rider-toolless $out/bin/rider \
+            #--argv0 rider \
+            #--prefix PATH : "${lib.makeBinPath extra-path}" \
+            #--prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extra-lib}"
+#
+          ## Our rider binary is at $out/bin/rider, so we need to link $out/rider/ to $out/
+          #shopt -s extglob
+          #ln -s $out/rider/!(bin) $out/
+          #shopt -u extglob
+        #'' + attrs.postInstall or "";
+      #});
+    #in 
+      #rider
+    #)
+    #beekeeper-studio
+    #lazydocker
+    #lazygit
+    #syncthing
     zsh
     (pkgs.writeScriptBin "zcc" ''
       #!/bin/sh
@@ -105,9 +96,9 @@
     vimAlias = true;
   };
 
-  programs.go.enable = true;
+  #programs.go.enable = true;
 
-  services.syncthing.enable = true;
+  #services.syncthing.enable = true;
   xdg.enable = true;
 
   home.sessionVariables = {
@@ -116,7 +107,7 @@
     TERM = userSettings.term;
     BROWSER = userSettings.browser;
     DOTNET_ROOT = pkgs.dotnet-sdk;
-    NIXOS_OZONE_WL=1;
+    #NIXOS_OZONE_WL=1;
   };
 
   home.stateVersion = "24.05";

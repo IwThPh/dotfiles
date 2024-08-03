@@ -1,0 +1,384 @@
+/* import pywal colors */
+
+@define-color background #161616;
+@define-color foreground #f2f4f8;
+@define-color cursor #b6b8bb;
+
+@define-color color0 #282828;
+@define-color color1 #ee5396;
+@define-color color2 #25be6a;
+@define-color color3 #08bdba;
+@define-color color4 #78a9ff;
+@define-color color5 #be95ff;
+@define-color color6 #33b1ff;
+@define-color color7 #dfdfe0;
+@define-color color8 #484848;
+@define-color color9 #f16da6;
+@define-color color10 #46c880;
+@define-color color11 #2dc7c4;
+@define-color color12 #8cb6ff;
+@define-color color13 #c8a5ff;
+@define-color color14 #52bdff;
+@define-color color15 #e4e4e5;
+
+* {
+    border: none;
+    font-family: "BlexMono Nerd Font";
+    font-size: 12px;
+    min-width: 16px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left>widget:first-child>#workspaces {
+    margin-left: 2px;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right>widget:last-child>#workspaces {
+    margin-right: 2px;
+}
+
+tooltip {
+    background: @background;
+    color: @color6;
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: @color6;
+}
+
+tooltip label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* window colors */
+
+window#waybar {
+    background: alpha(@background, 0.8);
+    border-radius: 12px;
+    color: @foreground;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#window {
+    padding: 0 3px;
+    border-radius: 8px;
+    transition: none;
+    background: alpha(@background, 0.1);
+    color: lighter(@color6);
+}
+
+/* workspaces colors */
+
+#workspaces {
+    border-radius: 8px;
+    /* transition: none; */
+    padding: 0 4px;
+    margin: 4px;
+}
+
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+    color: @color4;
+
+    box-shadow: inherit;
+    text-shadow: inherit;
+    background: transparent;
+}
+
+#workspaces button {
+    color: @color7;
+    background: transparent;
+
+    box-shadow: inherit;
+    text-shadow: inherit;
+    background: transparent;
+}
+
+#workspaces button.persistent {
+    color: @color5;
+}
+
+#workspaces button.urgent {
+    color: @foreground;
+    background-color: @color1;
+}
+
+#workspaces button.active {
+    color: @color13;
+    font-weight: 800;
+    background: @color7;
+    border-radius: 8px;
+}
+
+/* spotify */
+
+#custom-spotify {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    transition: none;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: @color2;
+    color: @background;
+}
+
+#custom-spotify.Paused {
+    color: @background;
+    background-color: @color7;
+}
+
+/* weather  */
+
+#custom-weather {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    transition: none;
+    font-weight: bold;
+    color: @background;
+    background-color: @color7;
+}
+
+/* cava */
+
+#custom-cava {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    transition: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+/* clock */
+
+#clock {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    transition: none;
+    font-weight: bold;
+    color: @background;
+    background-color: @color7;
+}
+
+/* language */
+
+#language {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    transition: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: @background;
+    background: @color7;
+}
+
+/* memory */
+
+#memory {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: none;
+    color: @background;
+    background: @color7;
+}
+
+
+#backlight {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: none;
+    color: @background;
+    background: @color7;
+
+}
+
+#network {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: none;
+    color: @background;
+    background: @color7;
+}
+
+#network.disabled {
+    color: @foreground;
+    background: @color0;
+}
+
+#network.disconnected {
+    color: @foreground;
+    background: @color1;
+}
+
+#idle_inhibitor {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: none;
+    color: @background;
+    background: @color7;
+}
+
+#idle_inhibitor.activated {
+    color: @foreground;
+    background: @color1;
+}
+
+/* pulseaudio */
+
+#wireplumber {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: none;
+    color: @background;
+    background: @color7;
+}
+
+#wireplumber.muted {
+    background: @color5;
+}
+
+/* bluetooth  */
+
+#bluetooth {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: none;
+    color: @background;
+    background: @color7;
+}
+
+/* battery */
+
+#battery {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    transition: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: @background;
+    background: @color7;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: #161617;
+    background-color: @color2;
+}
+
+#battery.critical:not(.charging) {
+    background-color: @color8;
+    color: @background;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to {
+        color: @color1;
+    }
+}
+
+/* tray */
+
+#tray {
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    transition: none;
+    font-size: 12px;
+    font-weight: bold;
+    /* color: @background; */
+    background: transparent;
+}
+
+/* unused modules */
+
+#audio {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: none;
+    color: @background;
+    background: @color7;
+}
+
+#custom-notification {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    transition: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: @background;
+    background-color: @color7;
+}
+
+#cpu {
+    min-width: 16px;
+    margin: 4px;
+    padding: 0 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: none;
+    color: #161617;
+    background: #ea83a5;
+}
+
+#custom-launcher {
+    min-width: 16px;
+    margin: 4px;
+    font-size: 18px;
+    padding: 0 8px;
+    border-radius: 8px;
+    transition: none;
+    color: #92a2d5;
+    background: transparent;
+}

@@ -18,6 +18,10 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+if [[ ! "$PATH" == */home/iwanp/src/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/home/iwanp/src/fzf/bin"
+fi
+
 ### End of Zinit's installer chunk
 zi ice depth"1"
 zi light romkatv/powerlevel10k
@@ -43,8 +47,8 @@ zi snippet OMZP::dotnet
 # zi snippet OMZP::kubectx
 zi snippet OMZP::command-not-found
 
-if [[ -d "~/.dotnet/tools" ]]; then
-  export PATH="$PATH:~/.dotnet/tools"
+if [[ -d "$HOME/.dotnet/tools" ]]; then
+  export PATH="${PATH:+${PATH}:}$HOME/.dotnet/tools"
 fi
 
 # M1 Mac, add homebrew to path
@@ -115,3 +119,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias ls='ls --color=auto'
+alias ssh='TERM=xterm-256color ssh'
