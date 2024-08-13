@@ -12,20 +12,74 @@
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [ pkgs.vim
-        ];
+      environment.systemPackages = [ 
+        pkgs.vim
+      ];
 
-      # Auto upgrade nix package and the daemon service.
+
+      nix.settings = {
+        experimental-features = "nix-command flakes";
+        auto-optimise-store = true;
+
+        allowed-users = [ "@wheel" "nix-serve" ];
+        
+        #extra-substituters = [
+          #"https://nix-community.cachix.org/"
+          #"https://cache.nixos.org/"
+          #"https://devenv.cachix.org/"
+          #"https://cosmic.cachix.org/"
+        #];
+      };
+
+      nix.gc = {
+        automatic = true;
+        options = "--delete-older-than 2d";
+        interval = {
+          Hour = 5;
+          Minute = 0;
+        };
+      };
+
       services.nix-daemon.enable = true;
-      # nix.package = pkgs.nix;
 
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
+      system.defaults.NSGlobalDomain = {
+        InitialKeyRepeat = 24; #units are 15ms, 500ms
+        KeyRepeat = 1; #units are 15ms, 15ms
+        NSDocumentSaveNewDocumentsToCloud = false;
+      };
+
+      security.pam.enableSudoTouchIdAuth = true;
+
+
 
       # Create /etc/zshrc that loads the nix-darwin environment.
-      programs.zsh.enable = true;  # default shell on catalina
-      # programs.fish.enable = true;
+      programs.zsh.enable = true;
+
+      homebrew = {
+        enable = true;
+        global = {
+          brewfile = true;
+        };
+        taps = ["homebrew/bundle" "homebrew/cask" "homebrew/core"];
+        brews = [];
+        casks = [
+          "firefox"
+        ];
+        masApps = {};
+      };
+
+      fonts = {
+        packages = [
+          ( pkgs.nerdfonts.override {
+            fonts = [
+              "IBMPlexMono"
+              "JetBrainsMono"
+              "Meslo"
+            ];
+          })
+        ];
+      };
+
 
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
