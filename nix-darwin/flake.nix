@@ -5,15 +5,22 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github.com:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
   let
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages = [ 
         pkgs.vim
+        pkgs.neovim
+        pkgs.alacritty
+        pkgs.yabai
       ];
 
 
@@ -40,16 +47,26 @@
         };
       };
 
-      services.nix-daemon.enable = true;
 
-      system.defaults.NSGlobalDomain = {
-        InitialKeyRepeat = 24; #units are 15ms, 500ms
-        KeyRepeat = 1; #units are 15ms, 15ms
-        NSDocumentSaveNewDocumentsToCloud = false;
+      system.defaults = {
+        dock.autohide = true;
+        dock.mru-spaces = false;
+        finder.AppleShowAllExtensions = true;
+        screencapture.location = "~/Pictures/screenshots";
+        NSGlobalDomain = {
+          InitialKeyRepeat = 12; #units are 15ms, 500ms
+          KeyRepeat = 1; #units are 15ms, 15ms
+          NSDocumentSaveNewDocumentsToCloud = false;
+        };
       };
 
       security.pam.enableSudoTouchIdAuth = true;
 
+      users.users.iwanp.home = "/Users/iwanp";
+      home-manager.backupFileExtersion = "backup";
+      services.nix-daemon.enable = true;
+      nix.configureBuildUsers = true;
+      nix.useDaemon = true;
 
 
       # Create /etc/zshrc that loads the nix-darwin environment.
@@ -96,7 +113,14 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."iwanp-ski" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+      modules = [ 
+        configuration 
+	home-manager.darwinModules.home-manager {
+	  home-manager.useGlobalPkgs = true;
+	  home-manager.useUserPackages = true;
+	  home-manager.users.iwanp = import "./home.nix";
+	};
+      ];
     };
 
     # Expose the package set, including overlays, for convenience.
