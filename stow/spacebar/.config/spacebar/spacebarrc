@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+
+spacebar -m config position top
+spacebar -m config height 32
+spacebar -m config title off
+spacebar -m config spaces on
+spacebar -m config clock on
+spacebar -m config power on
+spacebar -m config padding_left 20
+spacebar -m config padding_right 20
+spacebar -m config spacing_left 35
+spacebar -m config spacing_right 35
+spacebar -m config text_font "VictorMono Nerd Font Mono:Regular:12.0"
+spacebar -m config icon_font "VictorMono Nerd Font Mono:Bold:14.0"
+spacebar -m config background_color 0xff111111
+spacebar -m config foreground_color 0xfff2f4f8
+spacebar -m config space_icon_color 0xffee5396
+spacebar -m config power_icon_color 0xffee5396
+spacebar -m config battery_icon_color 0xffee5396
+spacebar -m config dnd_icon_color 0xfff2f4f8
+spacebar -m config clock_icon_color 0xfff2f4f8
+spacebar -m config power_icon_strip  
+spacebar -m config space_icon 
+spacebar -m config clock_icon 
+spacebar -m config dnd_icon 
+spacebar -m config clock_format "%a %d %b, %Y    %R"
+spacebar -m config right_shell on
+spacebar -m config right_shell_icon 
+spacebar -m config right_shell_icon_color 0xff78a9ff
+spacebar -m config right_shell_command "whoami"

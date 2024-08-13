@@ -1,0 +1,211 @@
+// -*- mode: jsonc -*-
+{
+  "layer": "top",
+  "spacing": 5,
+  "height": 24,
+  "margin-top": 10,
+  "margin-left": 10,
+  "margin-right": 10,
+  "gtk-layer-shell": true,
+  "reload_style_on_change": true,
+  "fixed-center": true,
+
+  // Modules layout
+
+  "modules-left": [
+      "hyprland/workspaces",
+      "custom/spotify",
+      "hyprland/window",
+  ],
+  "modules-center": [
+      // "custom/weather", 
+      "clock"
+  ],
+  "modules-right": [
+    "tray",
+    "wireplumber",
+    "network",
+    // "bluetooth",
+    "backlight",
+    "idle_inhibitor",
+    "battery",
+  ],
+
+  // "custom/weather": {
+  //   "format": "{}°C",
+  //   "tooltip": false,
+  //   "interval": 3600,
+  //   "exec": "wttrbar --location  --custom-indicator '{ICON} {temp_C}'",
+  //   // "exec": "$HOME/weather.sh",
+  //   "return-type": "json"
+  // },
+
+  "hyprland/window": {
+    "max-length": 200,
+    "separate-outputs": true
+  },
+
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": "<span size='large' rise='-1000'>󰖁 </span>",
+    "tooltip-format": "{icon}   {desc} || {volume}%",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pwvucontrol",
+    "format-icons": {
+      "headphone": " ",
+      "hands-free": " ",
+      "headset": " ",
+      "phone": " ",
+      "portable": " ",
+      "car": " ",
+      "default": ["", " ", "  "]
+    }
+  },
+
+  // workspaces
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{icon}",
+  },
+
+  // spotify
+
+  "custom/spotify": {
+    "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+    "format": "<span> {icon}  {}</span>",
+    "format-icons": {
+      "Playing": " ",
+      "Paused": " "
+    },
+    "max-length": 50,
+    "on-click": "playerctl play-pause --player spotify",
+    "on-click-right": "playerctl next --player spotify",
+    "on-click-middle": "playerctl previous --player spotify",
+    "on-scroll-up": "playerctl volume .05+",
+    "on-scroll-down": "playerctl volume .05-",
+    "return-type": "json",
+    "escape": true,
+    "tooltip-format": " {icon}  {}"
+  },
+
+  // clock
+
+  "clock": {
+    "tooltip": true,
+    "interval": 60,
+    "format": "{:%I:%M %p}",
+    "format-alt": "{:%a %d :: %I:%M %p}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "on-scroll": 1,
+      "format": {
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    }
+  },
+
+
+  "memory": {
+    "interval": 15,
+    "format": "<span></span>  {used}GiB",
+    "max-length": 13,
+    "tooltip-format": "󰍛  {used}GiB"
+  },
+
+  // bluetooth
+  "bluetooth": {
+    "format": "<span font='12'>󰂯</span>",
+    // "format": "",
+    "format-off": "<span font='13'>󰂲</span>",
+    "format-disabled": "<span font='13'>󰂲</span>",
+    // "format-disabled": "",
+    "format-connected": "<span size='large' rise='-1000'>󰂯</span>",
+    // "format-connected": "",
+    "format-connected-battery": "<span font='12'>{icon}</span>    {device_battery_percentage}%",
+    "format-icons": ["󰤾", "󰤿", "󰥀", "󰥁", "󰥂", "󰥃", "󰥄", "󰥅", "󰥆", "󰥈"],
+    // "tooltip-format": "{controller_alias}\t{controller_address}\n{num_connections} connected",
+    "tooltip-format-connected": "{icon}  {device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    "on-click": "blueman-manager"
+  },
+
+  // battery
+
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 10
+    },
+    "format": "<span font='12'>{icon}</span> {capacity}%",
+    "format-charging": "<span font='12'>󰂄</span> {capacity}%",
+    "format-plugged": "<span font='12'>󰂄</span> {capacity}%",
+    "format-alt": "<span font='12'>{icon}</span> {time}",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format": "󰂁 {capacity}%\n{time}"
+  },
+
+
+  // tray
+  "tray": {
+    "icon-size": 14,
+    "spacing": 10
+  },
+
+  // notification
+
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": " ",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+
+  "network": {
+    "format-wifi": "  {essid}",
+    "format-ethernet": "",
+    "tooltip-format": "{ifname} via {gwaddr}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 30
+  },
+
+  "backlight": {
+    "tooltip": false,
+    "format": "{icon} {percent}%",
+    "format-icons": [ "", "", "", "", "", "", "", "", "" ]
+  },
+
+  "idle_inhibitor": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰅶",
+      "deactivated": "󰾪"
+    }
+  },
+
+  // launcher
+  "custom/launcher": {
+    "format": "󱓞 ",
+    "on-click": "$HOME/.config/rofi/launcher.sh",
+    "on-click-right": "killall rofi"
+  }
+}
