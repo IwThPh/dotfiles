@@ -1,1 +1,14 @@
-/nix/store/xllxz1fqkvg4nf1dya3jpmdb5mxid3d2-home-manager-files/.config/alacritty/alacritty.toml
+import = ["~/.config/alacritty/themes/carbonfox.toml"]
+
+[window]
+padding = { x = 8, y = 8 }
+dynamic_padding = true
+# decorations = "buttonless"
+decorations = "none"
+
+[font]
+normal = { family = "BlexMono Nerd Font Mono", style = "Light" }
+bold.style = "SemiBold"
+italic.style = "Light Italic"
+bold_italic.style = "Semibold Italic"
+size = 12.0

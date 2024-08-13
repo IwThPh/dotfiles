@@ -22,13 +22,13 @@
       "clock"
   ],
   "modules-right": [
+    "tray",
     "wireplumber",
     "network",
     // "bluetooth",
     "backlight",
-    "battery",
     "idle_inhibitor",
-    "tray"
+    "battery",
   ],
 
   // "custom/weather": {
