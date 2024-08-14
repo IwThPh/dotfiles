@@ -6,7 +6,7 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
-      url = "github.com:nix-community/home-manager";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -16,11 +16,9 @@
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
-      environment.systemPackages = [ 
-        pkgs.vim
-        pkgs.neovim
-        pkgs.alacritty
-        pkgs.yabai
+
+      environment.systemPackages = with pkgs; [ 
+        vim
       ];
 
 
@@ -54,16 +52,19 @@
         finder.AppleShowAllExtensions = true;
         screencapture.location = "~/Pictures/screenshots";
         NSGlobalDomain = {
-          InitialKeyRepeat = 12; #units are 15ms, 500ms
-          KeyRepeat = 1; #units are 15ms, 15ms
+          InitialKeyRepeat = 14; #units are 15ms, 500ms
+          KeyRepeat = 2; #units are 15ms, 15ms
           NSDocumentSaveNewDocumentsToCloud = false;
         };
       };
 
+      system.keyboard.enableKeyMapping = true;
+      system.keyboard.remapCapsLockToControl = true;
+
       security.pam.enableSudoTouchIdAuth = true;
 
       users.users.iwanp.home = "/Users/iwanp";
-      home-manager.backupFileExtersion = "backup";
+      home-manager.backupFileExtension = "backup";
       services.nix-daemon.enable = true;
       nix.configureBuildUsers = true;
       nix.useDaemon = true;
@@ -72,15 +73,26 @@
       # Create /etc/zshrc that loads the nix-darwin environment.
       programs.zsh.enable = true;
 
+      services.skhd.enable = true;
+      services.yabai = {
+        enable = true;
+        enableScriptingAddition = true;
+      };
+
       homebrew = {
         enable = true;
         global = {
           brewfile = true;
         };
-        taps = ["homebrew/bundle" "homebrew/cask" "homebrew/core"];
+        taps = [
+          "homebrew/bundle" 
+        ];
         brews = [];
         casks = [
           "firefox"
+          "raycast"
+          "spotify"
+          "slack"
         ];
         masApps = {};
       };
@@ -113,13 +125,19 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."iwanp-ski" = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      pkgs = import nixpkgs { 
+        system = "aarch64-darwin";
+        config.allowUnfree = true; 
+      };
+
       modules = [ 
         configuration 
-	home-manager.darwinModules.home-manager {
-	  home-manager.useGlobalPkgs = true;
-	  home-manager.useUserPackages = true;
-	  home-manager.users.iwanp = import "./home.nix";
-	};
+        home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.iwanp = import ./home.nix;
+        }
       ];
     };
 
