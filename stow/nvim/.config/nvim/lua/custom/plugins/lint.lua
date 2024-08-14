@@ -6,7 +6,7 @@ return {
             -- Event to trigger linters
             events = { "BufWritePost", "BufReadPost", "InsertLeave" },
             linters_by_ft = {
-                ["*"] = { "typos" },
+                -- ["*"] = { "typos" },
             },
             -- LazyVim extension to easily override linter options
             -- or add custom linters.
