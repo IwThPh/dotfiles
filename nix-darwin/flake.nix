@@ -86,8 +86,12 @@
         };
         taps = [
           "homebrew/bundle" 
+          "homebrew/homebrew-core" 
+          "homebrew/homebrew-cask" 
         ];
-        brews = [];
+        brews = [
+          "jordanbaird-ice"
+        ];
         casks = [
           "firefox"
           "raycast"
