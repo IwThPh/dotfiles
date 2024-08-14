@@ -86,7 +86,7 @@
           window_animation_easing   =  "ease_out_quint";
           window_opacity_duration   =  "0.2";
           active_window_opacity     =  "1.0";
-          normal_window_opacity     =  "0.97";
+          normal_window_opacity     =  "0.93";
           window_opacity            =  "on";
           insert_feedback_color     =  "0xffee5396";
           split_ratio               =  "0.62";
