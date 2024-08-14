@@ -181,6 +181,9 @@
         brews = [
         ];
         casks = [
+          "tableplus"
+          "postman"
+          "spaceman"
           "jordanbaird-ice"
           "firefox"
           "raycast"
