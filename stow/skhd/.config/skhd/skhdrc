@@ -1,6 +1,6 @@
 # open terminal
 # cmd - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
-cmd - return : open -na /Applications/Alacritty.app
+cmd - return : alacritty
 
 # Navigation
 cmd - h : yabai -m window --focus west
@@ -14,10 +14,10 @@ cmd + alt - space : \
     yabai -m window --toggle border
 
 # Restart Yabai
-shift + ctrl + cmd - r : \
-    /usr/bin/env osascript <<< \
-        "display notification \"Restarting Yabai\" with title \"Yabai\""; \
-    yabai --restart-service
+# shift + ctrl + cmd - r : \
+#     /usr/bin/env osascript <<< \
+#         "display notification \"Restarting Yabai\" with title \"Yabai\""; \
+#     yabai --restart-service
 
 # Focus space
 cmd - 1 : yabai -m display --focus $(yabai -m query --spaces --space 1 | jq .display) && yabai -m space --focus 1
