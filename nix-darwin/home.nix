@@ -6,31 +6,42 @@
   home.stateVersion = "24.05";
 
   home.packages = with pkgs; [
-    alacritty
+    # Utils
     bitwarden-cli
     btop
     fzf
-    go
     jq
-    lua
-    neovim
     ripgrep
-    terraform
-    tree-sitter
     unzip
     yq
-    zellij
-    nodejs_22
-    rustup
 
-
+    # Lang / Runtimes
     (with dotnetCorePackages; combinePackages [
       sdk_6_0
       sdk_8_0
       runtime_6_0
       runtime_8_0
     ])
+    go
+    lua
+    nodejs_22
+    rustup
+    terraform
+    tree-sitter
+
+    # Docker
+    docker
+    docker-buildx
+    docker-compose
+    colima # colima start --cpu 4 --memory 8 --arch aarch64 --vm-type=vz --vz-rosetta
+
+    # Programs
+    alacritty
     jetbrains.rider
+    lazydocker
+    lazygit
+    neovim
+    zellij
   ];
 
   home.file = {

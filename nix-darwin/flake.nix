@@ -17,11 +17,23 @@
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
 
-      environment.systemPackages = with pkgs; [ 
-        vim
-      ];
+      # TODO: investigate darwinConfig for flakes
+      # environment.darwinConfig = "$HOME/dotfiles/nix-darwin/flake.nix"
 
+      environment = {
+        etc = {
+          terminfo = {
+            source = "${pkgs.ncurses}/share/terminfo";
+          };
+        };
 
+        systemPackages = with pkgs; [
+          vim
+          ncurses
+        ];
+      };
+
+      nix.linux-builder.enable = true;
       nix.settings = {
         experimental-features = "nix-command flakes";
         auto-optimise-store = true;
@@ -181,6 +193,7 @@
         brews = [
         ];
         casks = [
+          "missive"
           "tableplus"
           "postman"
           "spaceman"

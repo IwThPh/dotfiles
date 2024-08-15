@@ -60,7 +60,13 @@ if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
-eval "$(fzf --zsh)"
+if command -v fzf &> /dev/null; then
+  eval "$(fzf --zsh)"
+fi
+
+if command -v colima &> /dev/null; then
+    eval "$(colima completion zsh > "${fpath[1]}/_colima")"
+fi
 
 # Load completions
 autoload -Uz compinit
