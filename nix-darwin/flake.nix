@@ -138,6 +138,11 @@
           shift + cmd - k : yabai -m window --swap north
           shift + cmd - l : yabai -m window --swap east
 
+          alt + shift - h : yabai -m window --resize left:-55:0;
+          alt + shift - j : yabai -m window --resize bottom:0:55;
+          alt + shift - k : yabai -m window --resize top:0:-55;
+          alt + shift - l : yabai -m window --resize right:55:0;
+
           shift + cmd - f : yabai -m window --toggle zoom-fullscreen
 
           # Float / Unfloat window
