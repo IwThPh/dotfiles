@@ -14,7 +14,6 @@
     unzip
     # xq
     yq
-    filezilla
 
     # Lang / Runtimes
     (with dotnetCorePackages; combinePackages [

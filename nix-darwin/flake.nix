@@ -210,6 +210,7 @@
           "postman"
           "spaceman"
           "jordanbaird-ice"
+          "ghostty"
           "google-chrome"
           "firefox"
           "raycast"
@@ -217,6 +218,8 @@
           "slack"
         ];
         masApps = {};
+        onActivation.autoUpdate = true;
+        onActivation.cleanup = "zap";
       };
 
       fonts = {
