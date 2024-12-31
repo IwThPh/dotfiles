@@ -29,6 +29,7 @@
 
         systemPackages = with pkgs; [
           vim
+          mtr
           ncurses
         ];
       };
@@ -36,7 +37,7 @@
       nix.linux-builder.enable = true;
       nix.settings = {
         experimental-features = "nix-command flakes";
-        auto-optimise-store = true;
+        auto-optimise-store = false;
 
         allowed-users = [ "@wheel" "nix-serve" ];
         
@@ -126,7 +127,7 @@
         package = pkgs.skhd;
         skhdConfig = ''
           cmd - return : alacritty
-          cmd - s : open /Applications/Firefox.app
+          cmd - d : open /Applications/Firefox.app
 
           # Navigation
           cmd - h : yabai -m window --focus west
@@ -144,6 +145,7 @@
           alt + shift - l : yabai -m window --resize right:55:0;
 
           shift + cmd - f : yabai -m window --toggle zoom-fullscreen
+          alt + shift - f : yabai -m window --toggle native-fullscreen
 
           # Float / Unfloat window
           cmd + alt - space : \
@@ -196,13 +198,19 @@
           "homebrew/bundle" 
         ];
         brews = [
+          "mkcert"
+          "nss"
+          "azcopy"
         ];
         casks = [
+          "tower"
+          "loom"
           "missive"
           "tableplus"
           "postman"
           "spaceman"
           "jordanbaird-ice"
+          "google-chrome"
           "firefox"
           "raycast"
           "spotify"
@@ -213,13 +221,11 @@
 
       fonts = {
         packages = [
-          ( pkgs.nerdfonts.override {
-            fonts = [
-              "IBMPlexMono"
-              "JetBrainsMono"
-              "Meslo"
-            ];
-          })
+          pkgs.ibm-plex
+          pkgs.nerd-fonts.blex-mono
+          pkgs.nerd-fonts.jetbrains-mono
+          pkgs.nerd-fonts.victor-mono
+          pkgs.nerd-fonts.zed-mono
         ];
       };
 
@@ -243,6 +249,15 @@
       pkgs = import nixpkgs { 
         system = "aarch64-darwin";
         config.allowUnfree = true; 
+        config.permittedInsecurePackages = [
+          "dotnet-combined"
+          "dotnet-core-combined"
+          "dotnet-runtime-6.0.36"
+          "dotnet-runtime-wrapped-6.0.36"
+          "dotnet-sdk-6.0.428"
+          "dotnet-sdk-wrapped-6.0.428"
+          "dotnet-wrapped-combined"
+        ];
       };
 
       modules = [ 

@@ -7,25 +7,30 @@
 
   home.packages = with pkgs; [
     # Utils
-    bitwarden-cli
     btop
     fzf
     jq
     ripgrep
     unzip
+    # xq
     yq
+    filezilla
 
     # Lang / Runtimes
     (with dotnetCorePackages; combinePackages [
       sdk_6_0
       sdk_8_0
+      sdk_9_0
       runtime_6_0
       runtime_8_0
+      runtime_9_0
     ])
     go
     lua
+    mono
     nodejs_22
     rustup
+    # azure-cli
     terraform
     tree-sitter
 
@@ -37,9 +42,13 @@
 
     # Programs
     alacritty
+    bruno
+    cmake
+    k6
     jetbrains.rider
     lazydocker
     lazygit
+    mtr
     neovim
     zellij
   ];
