@@ -2,16 +2,28 @@
   description = "Darwin Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs = {
+      # url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+      url = "github:NixOS/nixpkgs";
+    };
+    nix-darwin = {
+      # url = "/Users/iwanp/dev/nix-darwin";
+      # url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
+      # url = "github:nix-community/home-manager/release-24.11";
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-rosetta-builder = {
+      url = "github:cpick/nix-rosetta-builder";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, nix-rosetta-builder }:
   let
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
@@ -34,13 +46,15 @@
         ];
       };
 
-      nix.linux-builder.enable = true;
       nix.settings = {
         experimental-features = "nix-command flakes";
         auto-optimise-store = false;
 
         allowed-users = [ "@wheel" "nix-serve" ];
-        
+        always-allow-substitutes = true;
+        substituters = [ 
+          "https://cache.nixos.org/" 
+        ];
         #extra-substituters = [
           #"https://nix-community.cachix.org/"
           #"https://cache.nixos.org/"
@@ -57,7 +71,6 @@
           Minute = 0;
         };
       };
-
 
       system.defaults = {
         dock.autohide = true;
@@ -78,10 +91,6 @@
 
       users.users.iwanp.home = "/Users/iwanp";
       home-manager.backupFileExtension = "backup";
-      services.nix-daemon.enable = true;
-      nix.configureBuildUsers = true;
-      nix.useDaemon = true;
-
 
       # Create /etc/zshrc that loads the nix-darwin environment.
       programs.zsh.enable = true;
@@ -238,17 +247,17 @@
 
       # Used for backwards compatibility, please read the changelog before changing.
       # $ darwin-rebuild changelog
-      system.stateVersion = 4;
+      system.stateVersion = 5;
 
       # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
+      nixpkgs.hostPlatform = pkgs.hostPlatform.system ;
     };
   in
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."iwanp-ski" = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
+      system = [ "aarch64-darwin" ];
       pkgs = import nixpkgs { 
         system = "aarch64-darwin";
         config.allowUnfree = true; 
