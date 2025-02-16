@@ -278,6 +278,11 @@
 
       modules = [ 
         configuration 
+        { 
+          nix.linux-builder.enable = true; 
+          nix.linux-builder.ephemeral = true; 
+        } # Bootstrap builder for nix-rosetta-builder
+        # nix-rosetta-builder.darwinModules.default
         home-manager.darwinModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
