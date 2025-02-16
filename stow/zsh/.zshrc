@@ -99,6 +99,10 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
+# see https://github.com/Aloxaf/fzf-tab/wiki/Configuration#default-color
+zstyle ':fzf-tab:*' default-color $'\033[30m'
+zstyle ':fzf-tab:*' fzf-flags --color=light
+
 if command -v dircolors &> /dev/null; then
   zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \

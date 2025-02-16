@@ -90,7 +90,7 @@ plugins {
 //   - false
 pane_frames false
 
-theme "nf-carbonfox"
+theme "dawnfox"
 
 default_layout "editor"
 

@@ -25,31 +25,31 @@ layout {
     children
     pane size=1 borderless=true {
       plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
-        format_left  "{mode}#[fg=#89B4FA,bg=black,bold] {session}#[bg=black] {tabs}"
-        format_right "{command_git_branch}#[fg=#424554,bg=black]::{datetime}"
-        format_space "#[bg=black]"
+        format_left  "{mode}#[fg=fg,bg=bg] {session}#[bg=bg] {tabs}"
+        format_right "{command_git_branch} #[fg=fg,bg=bg]:: {datetime}"
+        format_space "#[bg=fg]"
 
-        mode_normal  "#[bg=blue,bold] "
-        mode_locked  "#[bg=red,bold] "
-        mode_resize  "#[bg=cyan,bold] RESIZE "
-        mode_pane    "#[bg=green,bold] PANE "
-        mode_tab     "#[bg=yellow,bold] TAB "
-        mode_scroll  "#[bg=white,bold] SCROLL "
-        mode_session "#[bg=magenta,bold] SESSION "
-        mode_move    "#[bg=cyan,bold] MOVE "
+        mode_normal  "#[fg=white,bg=blue,bold] "
+        mode_locked  "#[fg=white,bg=red,bold] "
+        mode_resize  "#[fg=white,bg=cyan,bold] RESIZE "
+        mode_pane    "#[fg=white,bg=green,bold] PANE "
+        mode_tab     "#[fg=white,bg=yellow,bold] TAB "
+        mode_scroll  "#[fg=white,bg=white,bold] SCROLL "
+        mode_session "#[fg=white,bg=magenta,bold] SESSION "
+        mode_move    "#[fg=white,bg=cyan,bold] MOVE "
 
-        tab_normal               "#[fg=#6C7086,bg=black] {index} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-        tab_active               "#[fg=white,bg=black,bold,italic] {index} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+        tab_normal               "#[fg=fg,bg=bg] {index} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+        tab_active               "#[fg=cyan,bg=bg,bold,italic] {index} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
         tab_fullscreen_indicator "□ "
         tab_sync_indicator       " "
         tab_floating_indicator   "󰉈 "
 
         command_git_branch_command  "git branch --show-current"
-        command_git_branch_format   "#[fg=green,bg=black,italic] {stdout}"
+        command_git_branch_format   "#[fg=green,bg=bg,italic] {stdout}"
         command_git_branch_interval "10"
         command_git_branch_rendermode  "static"
 
-        datetime          "#[fg=#9399B2,bg=black] {format} "
+        datetime          "#[fg=fg,bg=bg] {format} "
         datetime_format   "%d %b %Y %H:%M"
         datetime_timezone "Europe/London"
       }

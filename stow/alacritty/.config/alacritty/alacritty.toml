@@ -12,4 +12,5 @@ bold_italic.style = "Semibold Italic"
 size = 14.0
 
 [general]
-import = ["~/.config/alacritty/themes/carbonfox.toml"]
+# import = ["~/.config/alacritty/themes/carbonfox.toml"]
+import = ["~/.config/alacritty/themes/dawnfox.toml"]
