@@ -51,6 +51,10 @@ if [[ -d "$HOME/.dotnet/tools" ]]; then
   export PATH="${PATH:+${PATH}:}$HOME/.dotnet/tools"
 fi
 
+if [[ -d "$HOME/go/bin" ]]; then
+  export PATH="${PATH:+${PATH}:}$HOME/go/bin"
+fi
+
 # M1 Mac, add homebrew to path
 if [[ $(uname) == "Darwin" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
