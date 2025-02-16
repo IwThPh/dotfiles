@@ -17,19 +17,25 @@
 
     # Lang / Runtimes
     (with dotnetCorePackages; combinePackages [
-      sdk_6_0
-      sdk_8_0
-      sdk_9_0
-      runtime_6_0
-      runtime_8_0
-      runtime_9_0
+      dotnet-sdk_6
+      dotnet-runtime_6
+      dotnet-aspnetcore_6
+      dotnet_8.runtime
+      dotnet_8.sdk
+      dotnet_8.aspnetcore
+      dotnet_9.runtime
+      dotnet_9.sdk
+      dotnet_9.aspnetcore
     ])
     go
-    lua
+    sqlite
+    lua51Packages.lua
+    lua51Packages.sqlite
+    lua51Packages.luasql-sqlite3
     mono
     nodejs_22
     rustup
-    # azure-cli
+    azure-cli
     terraform
     tree-sitter
 
@@ -66,6 +72,7 @@
     PAGER = "less";
     CLICLOLOR = 1;
     EDITOR = "nvim";
+    DOTNET_ROOT = "${pkgs.dotnet-sdk}/share/dotnet";
   };
 
   home.sessionPath = [
