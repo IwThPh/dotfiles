@@ -45,6 +45,12 @@
     docker-compose
     colima # colima start --cpu 4 --memory 8 --arch aarch64 --vm-type=vz --vz-rosetta
 
+    # Tex
+    pandoc
+    (pkgs.texlive.combine {
+      inherit (pkgs.texlive) scheme-tetex framed;
+    })
+
     # Programs
     alacritty
     bruno
