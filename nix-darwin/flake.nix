@@ -126,6 +126,9 @@
           right_padding             =  "8";
         };
         extraConfig = ''
+          yabai -m rule --add app="Rider" manage=off
+          yabai -m rule --add app="Rider" title="~/dev/" manage=on
+
           yabai -m rule --add app='System Settings' manage=off
           yabai -m signal --add event=dock_did_restart action='sudo yabai --load-sa'
         '';
