@@ -3,17 +3,17 @@
 
   inputs = {
     nixpkgs = {
-      # url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+      # url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
       url = "github:NixOS/nixpkgs";
     };
     nix-darwin = {
       # url = "/Users/iwanp/dev/nix-darwin";
-      # url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      # url = "github:LnL7/nix-darwin/nix-darwin-25.05";
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      # url = "github:nix-community/home-manager/release-24.11";
+      # url = "github:nix-community/home-manager/release-25.05";
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -43,6 +43,14 @@
           vim
           mtr
           ncurses
+          # make derivation of tailscale, to include nettools dependency
+          # (tailscale.overrideAttrs (oldAttrs: {
+          #   nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ nettools ];
+          #
+          #   postFixup = ''
+          #     wrapProgram $out/bin/tailscale --prefix PATH : ${nettools}/bin
+          #   '';
+          # }))
         ];
       };
 
@@ -87,7 +95,9 @@
       system.keyboard.enableKeyMapping = true;
       system.keyboard.remapCapsLockToControl = true;
 
-      security.pam.enableSudoTouchIdAuth = true;
+      security.pam.services.sudo_local.touchIdAuth = true;
+
+      # services.tailscale.enable = true;
 
       users.users.iwanp.home = "/Users/iwanp";
       home-manager.backupFileExtension = "backup";
@@ -97,7 +107,13 @@
 
       services.yabai = {
         enable = true;
-        package = pkgs.yabai;
+        package = pkgs.yabai.overrideAttrs (oldAttrs: {
+          version = "7.1.14";
+          src = pkgs.fetchzip {
+            url = "https://github.com/koekeishiya/yabai/releases/download/v7.1.14/yabai-v7.1.14.tar.gz";
+            sha256 = "0h4q7y5rywb6c39plw4zzjcnx98f0xbkgcasj723q1agncg8scvh";
+          };
+        });
         enableScriptingAddition = true;
         config = {
           mouse_follows_focus       =  "on";
@@ -138,7 +154,7 @@
         enable = true;
         package = pkgs.skhd;
         skhdConfig = ''
-          cmd - return : alacritty
+          cmd - return : open /Applications/Ghostty.app
           cmd - d : open /Applications/Firefox.app
 
           # Navigation
@@ -171,16 +187,16 @@
           #     yabai --restart-service
 
           # Focus space
-          cmd - 1 : yabai -m display --focus $(yabai -m query --spaces --space 1 | jq .display) && yabai -m space --focus 1
-          cmd - 2 : yabai -m display --focus $(yabai -m query --spaces --space 2 | jq .display) && yabai -m space --focus 2
-          cmd - 3 : yabai -m display --focus $(yabai -m query --spaces --space 3 | jq .display) && yabai -m space --focus 3
-          cmd - 4 : yabai -m display --focus $(yabai -m query --spaces --space 4 | jq .display) && yabai -m space --focus 4
-          cmd - 5 : yabai -m display --focus $(yabai -m query --spaces --space 5 | jq .display) && yabai -m space --focus 5
-          cmd - 6 : yabai -m display --focus $(yabai -m query --spaces --space 6 | jq .display) && yabai -m space --focus 6
-          cmd - 7 : yabai -m display --focus $(yabai -m query --spaces --space 7 | jq .display) && yabai -m space --focus 7
-          cmd - 8 : yabai -m display --focus $(yabai -m query --spaces --space 8 | jq .display) && yabai -m space --focus 8
-          cmd - 9 : yabai -m display --focus $(yabai -m query --spaces --space 9 | jq .display) && yabai -m space --focus 9
-          cmd - 0 : yabai -m display --focus $(yabai -m query --spaces --space 10 | jq .display) && yabai -m space --focus 10
+          #cmd - 1 : yabai -m display --focus $(yabai -m query --spaces --space 1 | jq .display) && yabai -m space --focus 1
+          #cmd - 2 : yabai -m display --focus $(yabai -m query --spaces --space 2 | jq .display) && yabai -m space --focus 2
+          #cmd - 3 : yabai -m display --focus $(yabai -m query --spaces --space 3 | jq .display) && yabai -m space --focus 3
+          #cmd - 4 : yabai -m display --focus $(yabai -m query --spaces --space 4 | jq .display) && yabai -m space --focus 4
+          #cmd - 5 : yabai -m display --focus $(yabai -m query --spaces --space 5 | jq .display) && yabai -m space --focus 5
+          cmd - 1 : yabai -m space --focus 1
+          cmd - 2 : yabai -m space --focus 2
+          cmd - 3 : yabai -m space --focus 3
+          cmd - 4 : yabai -m space --focus 4
+          cmd - 5 : yabai -m space --focus 5
 
           # Move window to space
           shift + cmd - 1 : yabai -m window --space 1
@@ -188,11 +204,6 @@
           shift + cmd - 3 : yabai -m window --space 3
           shift + cmd - 4 : yabai -m window --space 4
           shift + cmd - 5 : yabai -m window --space 5
-          shift + cmd - 6 : yabai -m window --space 6
-          shift + cmd - 7 : yabai -m window --space 7
-          shift + cmd - 8 : yabai -m window --space 8
-          shift + cmd - 9 : yabai -m window --space 9
-          shift + cmd - 0 : yabai -m window --space 10
 
           # Cycle spaces by mission-control index if one exists, otherwise focus the first/last space
           cmd - tab : yabai -m space --focus next || yabai -m space --focus first
@@ -278,11 +289,11 @@
 
       modules = [ 
         configuration 
-        # { 
-        #   nix.linux-builder.enable = true; 
-        #   nix.linux-builder.ephemeral = true; 
-        # } # Bootstrap builder for nix-rosetta-builder
-        nix-rosetta-builder.darwinModules.default
+        { 
+          nix.linux-builder.enable = true; 
+          nix.linux-builder.ephemeral = true; 
+        } # Bootstrap builder for nix-rosetta-builder
+        # nix-rosetta-builder.darwinModules.default
         home-manager.darwinModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
