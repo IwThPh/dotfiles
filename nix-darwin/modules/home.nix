@@ -1,21 +1,18 @@
 { config, pkgs, ... }:
 
 {
-  home.username = "iwanp";
-  home.homeDirectory = "/Users/iwanp";
-  home.stateVersion = "24.05";
-
   home.packages = with pkgs; [
     # Utils
+    bat
     btop
     fzf
     jq
     ripgrep
     unzip
-    # xq
     yq
 
     # Lang / Runtimes
+    mono
     (with dotnetCorePackages; combinePackages [
       dotnet-sdk_6
       dotnet-runtime_6
@@ -27,17 +24,23 @@
       dotnet_9.sdk
       dotnet_9.aspnetcore
     ])
+
     go
     sqlite
     lua51Packages.lua
     lua51Packages.sqlite
     lua51Packages.luasql-sqlite3
-    mono
     nodejs_22
-    rustup
-    azure-cli
     terraform
+    azure-cli
     tree-sitter
+
+    # lld
+    # cargo
+    # cargo-binutils
+    # rustc.llvmPackages.llvm
+    rustc
+    # rustup
 
     # Docker
     docker
@@ -53,13 +56,12 @@
 
     # Programs
     alacritty
-    bruno
     cmake
     k6
     jetbrains.rider
+    jetbrains.rust-rover
     lazydocker
     lazygit
-    mtr
     neovim
     zellij
   ];
@@ -85,54 +87,4 @@
     "/run/current-system/sw/bin"
     "$HOME/.nix-profile/bin"
   ];
-  
-  programs.home-manager.enable = true;
-  programs.git = {
-    enable = true;
-    userName = "Iwan Phillips";
-    userEmail = "iwan@iwanphillips.dev";
-    lfs.enable = true;
-
-    extraConfig = {
-        column.ui = "auto";
-        branch.sort = "-committerdate";
-        tag.sort = "version:refname";
-        init.defaultBranch = "main";
-        diff = {
-          algorithm = "histogram";
-          colorMoved = "default";
-          mnemonicPrefix = true;
-          renames = true;
-        };
-        push = {
-          default = "simple";
-          autoSetupRemote = true;
-          followTags = true;
-        };
-        fetch = {
-          prune = true;
-          pruneTags = true;
-          all = true;
-        };
-        help.autocorrect = "prompt";
-        commit.verbose = true;
-        rerere = {
-          enabled = true;
-          autoupdate = true;
-        };
-        rebase = {
-          autoSquash = true;
-          autoStash = true;
-          updateRefs = true;
-        };
-        merge.conflictstyle = "zdiff3";
-        pull.rebase = true;
-    };
-  };
-
-
-
-  programs.zsh = {
-    enable = true;
-  };
 }
