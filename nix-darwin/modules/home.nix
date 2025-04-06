@@ -12,57 +12,20 @@
     yq
 
     # Lang / Runtimes
-    mono
-    (with dotnetCorePackages; combinePackages [
-      dotnet-sdk_6
-      dotnet-runtime_6
-      dotnet-aspnetcore_6
-      dotnet_8.runtime
-      dotnet_8.sdk
-      dotnet_8.aspnetcore
-      dotnet_9.runtime
-      dotnet_9.sdk
-      dotnet_9.aspnetcore
-    ])
-
     go
-    sqlite
     lua51Packages.lua
-    lua51Packages.sqlite
     lua51Packages.luasql-sqlite3
+    lua51Packages.sqlite
     nodejs_22
-    terraform
-    azure-cli
     tree-sitter
 
-    # lld
-    # cargo
-    # cargo-binutils
-    # rustc.llvmPackages.llvm
-    rustc
-    # rustup
-
-    # Docker
-    docker
-    docker-buildx
-    docker-compose
-    colima # colima start --cpu 4 --memory 8 --arch aarch64 --vm-type=vz --vz-rosetta
-
-    # Tex
-    pandoc
-    (pkgs.texlive.combine {
-      inherit (pkgs.texlive) scheme-tetex framed;
-    })
-
     # Programs
-    alacritty
+    azure-cli
     cmake
     k6
-    jetbrains.rider
-    jetbrains.rust-rover
-    lazydocker
-    lazygit
     neovim
+    sqlite
+    terraform
     zellij
   ];
 
@@ -80,7 +43,6 @@
     PAGER = "less";
     CLICLOLOR = 1;
     EDITOR = "nvim";
-    DOTNET_ROOT = "${pkgs.dotnet-sdk}/share/dotnet";
   };
 
   home.sessionPath = [

@@ -3,9 +3,12 @@
 let
   modules = [
     ./bat.nix
-    ./nix.nix
     ./git.nix
     ./home.nix
+    ./dotnet.nix
+    ./docker.nix
+    ./latex.nix
+    ./rust.nix
   ];
 in
 {

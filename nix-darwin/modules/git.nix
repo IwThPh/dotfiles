@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 let
   name = "Iwan Phillips";
   email = "iwan@iwanphillips.dev";
@@ -48,4 +48,9 @@ in
       pull.rebase = true;
     };
   };
+
+
+  home.packages = with pkgs; [
+    lazygit
+  ];
 }
