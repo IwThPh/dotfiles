@@ -47,29 +47,9 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.iwanp = {
-                imports = [
-                  ./modules
-                ];
-              };
+              home-manager.users.iwanp = { imports = [ ./modules ]; };
             }
           ];
-
-          # pkgs = import nixpkgs {
-          #   system = "aarch64-darwin";
-          #   config.allowUnfree = true;
-          #   config.permittedInsecurePackages = [
-          #     "dotnet-combined"
-          #     "dotnet-core-combined"
-          #     "dotnet-runtime-6.0.36"
-          #     "dotnet-runtime-wrapped-6.0.36"
-          #     "dotnet-sdk-6.0.428"
-          #     "dotnet-sdk-wrapped-6.0.428"
-          #     "aspnetcore-runtime-6.0.36"
-          #     "dotnet-wrapped-combined"
-          #   ];
-          # };
-
         };
       };
     };
