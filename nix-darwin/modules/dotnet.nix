@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-ners, ... }:
 {
   home.packages = with pkgs; [
     mono
@@ -6,6 +6,9 @@
       dotnet-sdk_6
       dotnet-runtime_6
       dotnet-aspnetcore_6
+      dotnet-sdk_7
+      dotnet-runtime_7
+      dotnet-aspnetcore_7
       dotnet_8.runtime
       dotnet_8.sdk
       dotnet_8.aspnetcore

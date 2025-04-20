@@ -2,18 +2,20 @@
 
 {
   home.packages = with pkgs; [
-    # rustup
-    rust-analyzer
-    cargo
+    rustup
     cargo-audit
     cargo-outdated
     cargo-update
     cargo-watch
-    # lld
-    # cargo-binutils
-    # rustc.llvmPackages.llvm
+    cargo-binutils
+    # cargo-llvm-cov -- broken, installing manually via cargo. `cargo install cargo-llvm-cov`
+
+    # cargo
+    # rust-analyzer
+
     rustc
-    # rustup
+    rustc.llvmPackages.llvm
+    lld
 
     jetbrains.rust-rover
   ];

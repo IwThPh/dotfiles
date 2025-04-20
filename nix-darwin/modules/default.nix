@@ -5,6 +5,7 @@ let
     ./bat.nix
     ./git.nix
     ./home.nix
+    ./kubernetes.nix
     ./dotnet.nix
     ./docker.nix
     ./latex.nix
