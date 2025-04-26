@@ -21,6 +21,7 @@
 
     # Programs
     azure-cli
+    google-cloud-sdk
     cmake
     k6
     neovim
