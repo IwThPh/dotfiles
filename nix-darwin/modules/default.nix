@@ -15,6 +15,7 @@ in
 {
   imports = modules;
   xdg.dataHome = "${config.home.homeDirectory}/.local/share";
+  xdg.configHome = "${config.home.homeDirectory}/.config";
   programs.home-manager.enable = true;
   home.username = "iwanp";
   home.homeDirectory = "/Users/iwanp";

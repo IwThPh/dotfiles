@@ -44,7 +44,6 @@
     PAGER = "less";
     CLICLOLOR = 1;
     EDITOR = "nvim";
-    XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
   };
 
   home.sessionPath = [
