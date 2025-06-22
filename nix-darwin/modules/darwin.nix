@@ -98,7 +98,7 @@
     package = pkgs.skhd;
     skhdConfig = ''
       cmd - return : open /Applications/Ghostty.app
-      cmd - d : open /Applications/Firefox.app
+      cmd - d : open /Applications/Zen.app
 
       # Navigation
       cmd - h : yabai -m window --focus west
