@@ -5,16 +5,9 @@
   system.stateVersion = 5;
 
   environment = {
-    etc = {
-      terminfo = {
-        source = "${pkgs.ncurses}/share/terminfo";
-      };
-    };
-
     systemPackages = with pkgs; [
       vim
       mtr
-      ncurses
       # make derivation of tailscale, to include nettools dependency
       # (tailscale.overrideAttrs (oldAttrs: {
       #   nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ nettools ];
@@ -48,6 +41,7 @@
 
   # services.tailscale.enable = true;
 
+  system.primaryUser = "iwanp";
   users.users.iwanp = {
     name = "iwanp";
     home = "/Users/iwanp";
