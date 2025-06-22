@@ -10,6 +10,7 @@
     ripgrep
     unzip
     yq
+    grpcurl
 
     # Lang / Runtimes
     go
