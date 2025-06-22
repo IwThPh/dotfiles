@@ -169,18 +169,19 @@
       "azcopy"
     ];
     casks = [
-      "tower"
-      "loom"
-      "missive"
-      "tableplus"
-      "spaceman"
-      "jordanbaird-ice"
+      "firefox"
       "ghostty"
       "google-chrome"
-      "firefox"
+      "jordanbaird-ice"
+      "loom"
+      "missive"
       "raycast"
-      "spotify"
       "slack"
+      "spaceman"
+      "spotify"
+      "tableplus"
+      "tower"
+      "headlamp"
     ];
     masApps = { };
     onActivation.autoUpdate = true;
