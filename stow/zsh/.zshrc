@@ -135,3 +135,11 @@ export NVM_DIR="$HOME/.nvm"
 alias k='kubectl'
 alias ls='ls --color=auto'
 alias ssh='TERM=xterm-256color ssh'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+export PATH="$HOME/.local/bin:$PATH"
+
+SF_AC_ZSH_SETUP_PATH=/Users/iwanp/Library/Caches/sf/autocomplete/zsh_setup && test -f $SF_AC_ZSH_SETUP_PATH && source $SF_AC_ZSH_SETUP_PATH; # sf autocomplete setup

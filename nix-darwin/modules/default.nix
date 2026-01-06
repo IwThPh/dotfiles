@@ -8,7 +8,7 @@ let
     ./kubernetes.nix
     ./dotnet.nix
     ./docker.nix
-    ./latex.nix
+    # ./latex.nix
     ./rust.nix
   ];
 in

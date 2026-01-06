@@ -5,7 +5,7 @@
     rustup
     cargo-audit
     cargo-outdated
-    cargo-update
+    #cargo-update
     cargo-watch
     cargo-binutils
     # cargo-llvm-cov -- broken, installing manually via cargo. `cargo install cargo-llvm-cov`
