@@ -6,13 +6,15 @@ in
 {
   programs.git = {
     enable = true;
-    userName = name;
-    userEmail = email;
     lfs.enable = true;
 
     ignores = [ ".DS_Store" ];
 
-    extraConfig = {
+    settings = {
+      user = {
+        name = name;
+        email = email;
+      };
       column.ui = "auto";
       branch.sort = "-committerdate";
       tag.sort = "version:refname";
