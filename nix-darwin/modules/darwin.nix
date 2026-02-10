@@ -168,11 +168,13 @@
     };
     taps = [
       "homebrew/bundle"
+      "cormacrelf/tap"
     ];
     brews = [
       "mkcert"
       "nss"
       "azcopy"
+      "dark-notify"
     ];
     casks = [
       "firefox"
