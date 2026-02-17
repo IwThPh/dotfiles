@@ -21,8 +21,11 @@
     tree-sitter
 
     # Programs
+    gh
     azure-cli
+    bws
     doctl
+    doppler
     duckdb
     google-cloud-sdk
     cmake
@@ -30,6 +33,7 @@
     neovim
     sqlite
     terraform
+    yamllint
     zellij
   ];
 
@@ -53,4 +57,5 @@
     "/run/current-system/sw/bin"
     "$HOME/.nix-profile/bin"
   ];
+
 }
