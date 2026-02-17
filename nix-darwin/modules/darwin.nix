@@ -1,8 +1,17 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
+let
+  username = config.users.users.iwanp.name;
+  homeDir = config.users.users.iwanp.home;
+in
 {
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 5;
+
+  launchd.user.envVariables = {
+    PATH = "/etc/profiles/per-user/${username}/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+    DOCKER_HOST = "unix://${homeDir}/.colima/default/docker.sock";
+  };
 
   environment = {
     systemPackages = with pkgs; [
@@ -40,6 +49,51 @@
   security.pam.services.sudo_local.touchIdAuth = true;
 
   # services.tailscale.enable = true;
+
+  system.activationScripts.postActivation.text = ''
+    mkdir -p ${homeDir}/.ssh
+    echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINO4m8QiaIHgVYkgEQPxBHpdebKqxmP5VIVbw3wwlxR4 iwanp-s23' > ${homeDir}/.ssh/authorized_keys
+    chown ${username} ${homeDir}/.ssh/authorized_keys
+    chmod 600 ${homeDir}/.ssh/authorized_keys
+  '';
+
+  services.openssh = {
+    enable = true;
+    extraConfig = ''
+      PermitRootLogin no
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      AllowUsers ${username}
+      X11Forwarding no
+    '';
+  };
+
+  # pf firewall rules to restrict SSH to local + Tailscale subnets
+  environment.etc."pf.anchors/dev.iwanp.sshd".text = ''
+    pass in quick proto tcp from 10.0.0.0/24 to any port 22
+    block in quick proto tcp from any to any port 22
+  '';
+
+  environment.etc."pf.anchors/dev.iwanp.pf.conf".text = ''
+    scrub-anchor "com.apple/*"
+    nat-anchor "com.apple/*"
+    rdr-anchor "com.apple/*"
+    dummynet-anchor "com.apple/*"
+    anchor "com.apple/*"
+    load anchor "com.apple" from "/etc/pf.anchors/com.apple"
+    anchor "dev.iwanp.sshd"
+    load anchor "dev.iwanp.sshd" from "/etc/pf.anchors/dev.iwanp.sshd"
+  '';
+
+  launchd.daemons.pf-sshd = {
+    serviceConfig = {
+      Label = "dev.iwanp.pf-sshd";
+      RunAtLoad = true;
+      ProgramArguments = [
+        "/sbin/pfctl" "-e" "-f" "/etc/pf.anchors/dev.iwanp.pf.conf"
+      ];
+    };
+  };
 
   system.primaryUser = "iwanp";
   users.users.iwanp = {
