@@ -71,6 +71,7 @@ in
   # pf firewall rules to restrict SSH to local + Tailscale subnets
   environment.etc."pf.anchors/dev.iwanp.sshd".text = ''
     pass in quick proto tcp from 10.0.0.0/24 to any port 22
+    pass in quick proto tcp from 100.64.0.0/10 to any port 22
     block in quick proto tcp from any to any port 22
   '';
 
