@@ -232,18 +232,15 @@ in
       "dark-notify"
     ];
     casks = [
-      "firefox"
       "ghostty"
       "google-chrome"
       "jordanbaird-ice"
-      "loom"
       "missive"
       "raycast"
       "slack"
       "spaceman"
       "spotify"
       "tableplus"
-      "tower"
       "headlamp"
     ];
     masApps = { };
