@@ -18,9 +18,9 @@ let
         dotnet_9.runtime
         dotnet_9.sdk
         dotnet_9.aspnetcore
-        dotnet_10.runtime
-        dotnet_10.sdk
-        dotnet_10.aspnetcore
+        # dotnet_10.runtime
+        # dotnet_10.sdk
+        # dotnet_10.aspnetcore
       ])
     ];
     ignoreCollisions = true;
