@@ -18,6 +18,7 @@
     lua51Packages.luasql-sqlite3
     lua51Packages.sqlite
     nodejs_22
+    yarn
     tree-sitter
 
     # Programs
