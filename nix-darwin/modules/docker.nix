@@ -8,6 +8,14 @@
     lazydocker
   ];
 
+  home.file.".docker/cli-plugins/docker-buildx" = {
+    source = "${pkgs.docker-buildx}/libexec/docker/cli-plugins/docker-buildx";
+  };
+
+  home.file.".docker/cli-plugins/docker-compose" = {
+    source = "${pkgs.docker-compose}/libexec/docker/cli-plugins/docker-compose";
+  };
+
   home.sessionVariables = {
     DOCKER_HOST = "unix://${config.home.homeDirectory}/.colima/default/docker.sock";
     TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE = "/var/run/docker.sock";
