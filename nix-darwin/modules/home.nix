@@ -22,6 +22,7 @@
     tree-sitter
 
     # Programs
+    powershell
     gh
     azure-cli
     bws
