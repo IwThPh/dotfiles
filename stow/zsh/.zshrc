@@ -1,6 +1,7 @@
-# Auto-start Zellij
-if command -v zellij &> /dev/null && [[ -z "$ZELLIJ" ]]; then
-  exec zellij
+# Auto-start Zellij (only when attached to a real terminal, not when Zed spawns a shell)
+if [[ -t 0 && -t 1 ]] && command -v zellij &> /dev/null; then
+  export ZELLIJ_AUTO_EXIT=true
+  eval "$(zellij setup --generate-auto-start zsh)"
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -128,6 +129,7 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 if command -v gh &> /dev/null; then
   gh_token=$(gh auth token)
   export GITHUB_API_TOKEN="$gh_token"
+  eval "$(gh completion -s zsh)"
 fi
 
 source ~/.config/zsh/functions.sh

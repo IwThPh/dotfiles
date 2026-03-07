@@ -94,7 +94,7 @@ plugins {
     session-manager location="zellij:session-manager"
 }
 
-theme "carbonfox"
+theme "dawnfox"
 default_layout "compact"
 pane_frames false
 copy_command "pbcopy"
