@@ -233,6 +233,7 @@ in
     ];
     casks = [
       "ghostty"
+      "bruno"
       "google-chrome"
       "jordanbaird-ice"
       "missive"
