@@ -13,9 +13,14 @@
       url = "github:LnL7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, nixos-wsl, ... }@inputs:
     let
       insecurePackages = [
         "dotnet-combined"
@@ -64,17 +69,25 @@
         };
       };
 
-      homeConfigurations = {
-        iwanp-dsk = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-            config.permittedInsecurePackages = insecurePackages;
-          };
-          extraSpecialArgs = { inherit inputs; };
-          modules = [ ./modules/linux ];
+      nixosConfigurations = {
+        iwanp-dsk = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            nixos-wsl.nixosModules.default
+            ./hosts/iwanp-dsk.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.iwanp = { imports = [ ./modules/linux ]; };
+            }
+          ];
         };
+      };
 
+      homeConfigurations = {
         iwanp-s23 = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "aarch64-linux";

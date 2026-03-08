@@ -1,6 +1,6 @@
 # Dotfiles
 
-Multi-platform dotfiles managed with [Nix](https://nixos.org/) ([nix-darwin](https://github.com/LnL7/nix-darwin) + [home-manager](https://github.com/nix-community/home-manager)) and [GNU Stow](https://www.gnu.org/software/stow/).
+Multi-platform dotfiles managed with [Nix](https://nixos.org/) ([nix-darwin](https://github.com/LnL7/nix-darwin), [NixOS-WSL](https://github.com/nix-community/NixOS-WSL), [home-manager](https://github.com/nix-community/home-manager)) and [GNU Stow](https://www.gnu.org/software/stow/).
 
 Supports three platforms:
 
@@ -25,28 +25,24 @@ git clone git@github.com:IwThPh/dotfiles.git ~/dotfiles
 darwin-rebuild switch --flake ~/dotfiles/nix
 ```
 
-### WSL (Windows)
+### WSL (Windows — NixOS-WSL)
 
-```bash
-# 1. Install WSL 2 (from PowerShell)
-#    wsl --install
+```powershell
+# 1. Download nixos-wsl.tar.gz from https://github.com/nix-community/NixOS-WSL/releases
 
-# 2. Install Nix
-sh <(curl -L https://nixos.org/nix/install) --daemon
+# 2. Import the NixOS distro (PowerShell)
+wsl --import NixOS $env:USERPROFILE\NixOS\ nixos-wsl.tar.gz --version 2
 
-# 3. Enable flakes
-mkdir -p ~/.config/nix
-echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf
-
-# 4. Clone and apply
+# 3. Enter NixOS and apply
+wsl -d NixOS
 git clone git@github.com:IwThPh/dotfiles.git ~/dotfiles
-nix run home-manager/release-25.11 -- switch --flake ~/dotfiles/nix#iwanp-dsk
+sudo nixos-rebuild switch --flake ~/dotfiles/nix#iwanp-dsk
 ```
 
 On subsequent rebuilds:
 
 ```bash
-home-manager switch --flake ~/dotfiles/nix#iwanp-dsk
+sudo nixos-rebuild switch --flake ~/dotfiles/nix#iwanp-dsk
 ```
 
 ### Android (Nix-on-Droid)
