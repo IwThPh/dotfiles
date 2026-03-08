@@ -23,6 +23,7 @@
     tree-sitter
 
     # Programs
+    claude-code
     powershell
     gh
     azure-cli
