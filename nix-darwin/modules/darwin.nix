@@ -259,6 +259,7 @@ in
       "spotify"
       "tableplus"
       "headlamp"
+      "obsidian"
     ];
     masApps = { };
     onActivation.autoUpdate = true;
