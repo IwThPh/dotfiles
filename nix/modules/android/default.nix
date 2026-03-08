@@ -14,6 +14,7 @@
   home.stateVersion = "24.05";
 
   home.packages = with pkgs; [
+    openssh
     neovim
     ripgrep
     fzf
