@@ -1,5 +1,5 @@
 # Auto-start Zellij (only when attached to a real terminal, not when Zed spawns a shell)
-if [[ -t 0 && -t 1 ]] && command -v zellij &> /dev/null; then
+if [[ -z "$ZELLIJ" && -z "$NO_ZELLIJ" && -t 0 && -t 1 ]] && command -v zellij &> /dev/null; then
   export ZELLIJ_AUTO_EXIT=true
   eval "$(zellij setup --generate-auto-start zsh)"
 fi
