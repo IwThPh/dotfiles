@@ -17,14 +17,6 @@ in
     systemPackages = with pkgs; [
       vim
       mtr
-      # make derivation of tailscale, to include nettools dependency
-      # (tailscale.overrideAttrs (oldAttrs: {
-      #   nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ nettools ];
-      #
-      #   postFixup = ''
-      #     wrapProgram $out/bin/tailscale --prefix PATH : ${nettools}/bin
-      #   '';
-      # }))
     ];
   };
 
@@ -188,18 +180,7 @@ in
           yabai -m window --toggle float; \
           yabai -m window --toggle border
 
-      # Restart Yabai
-      # shift + ctrl + cmd - r : \
-      #     /usr/bin/env osascript <<< \
-      #         "display notification \"Restarting Yabai\" with title \"Yabai\""; \
-      #     yabai --restart-service
-
       # Focus space
-      #cmd - 1 : yabai -m display --focus $(yabai -m query --spaces --space 1 | jq .display) && yabai -m space --focus 1
-      #cmd - 2 : yabai -m display --focus $(yabai -m query --spaces --space 2 | jq .display) && yabai -m space --focus 2
-      #cmd - 3 : yabai -m display --focus $(yabai -m query --spaces --space 3 | jq .display) && yabai -m space --focus 3
-      #cmd - 4 : yabai -m display --focus $(yabai -m query --spaces --space 4 | jq .display) && yabai -m space --focus 4
-      #cmd - 5 : yabai -m display --focus $(yabai -m query --spaces --space 5 | jq .display) && yabai -m space --focus 5
       cmd - 1 : yabai -m space --focus 1
       cmd - 2 : yabai -m space --focus 2
       cmd - 3 : yabai -m space --focus 3

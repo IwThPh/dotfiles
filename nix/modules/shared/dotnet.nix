@@ -1,4 +1,4 @@
-{ pkgs, pkgs-ners, ... }:
+{ pkgs, ... }:
 let
   # Merge all SDKs/runtimes into one env and ignore file collisions.
   dotnetCombined = pkgs.buildEnv {
@@ -27,9 +27,8 @@ let
   };
 in
 {
-  home.packages = with pkgs; [
+  home.packages = [
     dotnetCombined
-    jetbrains.rider
   ];
 
   # Point tools at the newest SDK so the host/runtime resolver behaves as expected.

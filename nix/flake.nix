@@ -1,5 +1,5 @@
 {
-  description = "iwthph's macOS configuration";
+  description = "iwthph's multi-platform configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
@@ -17,8 +17,6 @@
 
   outputs = { self, nixpkgs, home-manager, darwin, ... }@inputs:
     let
-      system = "aarch64-darwin";
-
       insecurePackages = [
         "dotnet-combined"
         "dotnet-core-combined"
@@ -38,10 +36,11 @@
     {
       darwinConfigurations = {
         iwanp-ski = darwin.lib.darwinSystem {
-          inherit inputs system;
+          inherit inputs;
+          system = "aarch64-darwin";
 
           pkgs = import nixpkgs {
-            inherit system;
+            system = "aarch64-darwin";
             config.allowUnfree = true;
             config.permittedInsecurePackages = insecurePackages;
           };
@@ -51,7 +50,7 @@
           };
 
           modules = [
-            ./modules/darwin.nix
+            ./hosts/iwanp-ski.nix
             home-manager.darwinModules.home-manager
             {
               home-manager.extraSpecialArgs = {
@@ -59,9 +58,30 @@
               };
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.iwanp = { imports = [ ./modules ]; };
+              home-manager.users.iwanp = { imports = [ ./modules/darwin ]; };
             }
           ];
+        };
+      };
+
+      homeConfigurations = {
+        iwanp-dsk = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+            config.permittedInsecurePackages = insecurePackages;
+          };
+          extraSpecialArgs = { inherit inputs; };
+          modules = [ ./modules/linux ];
+        };
+
+        iwanp-s23 = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "aarch64-linux";
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = { inherit inputs; };
+          modules = [ ./modules/android ];
         };
       };
     };
