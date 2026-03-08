@@ -55,12 +55,14 @@ home-manager switch --flake ~/dotfiles/nix#iwanp-dsk
 # 1. Install Nix-on-Droid from F-Droid
 #    https://github.com/nix-community/nix-on-droid
 
-# 2. Clone and apply
-git clone git@github.com:IwThPh/dotfiles.git ~/dotfiles
-nix run home-manager/release-25.11 -- switch --flake ~/dotfiles/nix#iwanp-s23
+# 2. Apply directly from GitHub (nix shell provides git for flake evaluation)
+nix shell nixpkgs#git --extra-experimental-features "nix-command flakes" -c nix run home-manager/release-25.11 -- switch --flake github:IwThPh/dotfiles?dir=nix#iwanp-s23
+
+# 3. Clone for local rebuilds (git is now available via home-manager)
+git clone https://github.com/IwThPh/dotfiles.git ~/dotfiles
 ```
 
-On subsequent rebuilds:
+Subsequent rebuilds:
 
 ```bash
 home-manager switch --flake ~/dotfiles/nix#iwanp-s23
