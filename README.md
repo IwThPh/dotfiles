@@ -33,10 +33,14 @@ darwin-rebuild switch --flake ~/dotfiles/nix
 # 2. Import the NixOS distro (PowerShell)
 wsl --import NixOS $env:USERPROFILE\NixOS\ nixos-wsl.tar.gz --version 2
 
-# 3. Enter NixOS and apply
+# 3. Enter NixOS and apply directly from GitHub
 wsl -d NixOS
+sudo nixos-rebuild switch --flake github:IwThPh/dotfiles?dir=nix#iwanp-dsk \
+  --option extra-experimental-features "nix-command flakes" \
+  --no-write-lock-file
+
+# 4. Clone for local rebuilds
 git clone git@github.com:IwThPh/dotfiles.git ~/dotfiles
-sudo nixos-rebuild switch --flake ~/dotfiles/nix#iwanp-dsk
 ```
 
 On subsequent rebuilds:
