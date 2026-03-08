@@ -1,3 +1,6 @@
 [submodule "stow/nvim/.config/nvim"]
 	path = stow/nvim/.config/nvim
 	url = git@github.com:IwThPh/nvim-config.git
+[submodule "stow/claude/.claude"]
+	path = stow/claude/.claude
+	url = git@github.com:IwThPh/claude-config.git
