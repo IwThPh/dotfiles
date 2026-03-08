@@ -16,7 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: nix flake check ./nix
 
   check-linux:
@@ -25,7 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: nix build ./nix#homeConfigurations.iwanp-dsk.activationPackage
 
   check-darwin:
@@ -34,7 +32,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: nix build ./nix#darwinConfigurations.iwanp-ski.system --dry-run
 
   check-android:
@@ -43,7 +40,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: >-
           nix eval ./nix#homeConfigurations.iwanp-s23.activationPackage
           --apply 'drv: drv.drvPath' --raw
