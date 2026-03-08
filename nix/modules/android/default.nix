@@ -17,6 +17,23 @@
     install -Dm644 "${pkgs.nerd-fonts.jetbrains-mono}/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf" "$HOME/.termux/font.ttf"
   '';
 
+  home.sessionVariables.LANG = "C.UTF-8";
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = false;
+    settings = {
+      format = "$directory$git_branch$git_status$cmd_duration$character";
+      directory.truncation_length = 3;
+      git_branch.format = "[$branch]($style) ";
+      cmd_duration.min_time = 2000;
+    };
+  };
+
+  home.file.".bashrc".text = ''
+    eval "$(starship init bash)"
+  '';
+
   home.packages = with pkgs; [
     openssh
     nerd-fonts.jetbrains-mono
