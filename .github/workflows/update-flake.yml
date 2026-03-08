@@ -1,0 +1,45 @@
+name: Update flake inputs
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Monday 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    name: Update flake.lock
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Update flake inputs
+        run: nix flake update --flake ./nix
+
+      - name: Create or update PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="ci-flake-update"
+          if ! git diff --quiet nix/flake.lock; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git checkout -B "$BRANCH"
+            git add nix/flake.lock
+            git commit -m "chore: update flake inputs"
+            git push -u origin "$BRANCH" --force-with-lease
+
+            if ! gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number' | grep -q .; then
+              gh pr create \
+                --title "chore: update flake inputs" \
+                --body "Automated weekly update of nix flake inputs." \
+                --head "$BRANCH" \
+                --base main
+            fi
+          else
+            echo "No changes to flake.lock - inputs are up to date."
+          fi
