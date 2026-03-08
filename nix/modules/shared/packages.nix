@@ -11,6 +11,7 @@
     unzip
     yq
     grpcurl
+    nixfmt
 
     # Lang / Runtimes
     go
@@ -25,7 +26,6 @@
     powershell
     gh
     azure-cli
-    bws
     doctl
     doppler
     duckdb
