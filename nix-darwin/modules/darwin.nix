@@ -50,6 +50,22 @@ in
 
   # services.tailscale.enable = true;
 
+  launchd.user.agents.syncthing = {
+    serviceConfig = {
+      Label = "dev.iwanp.syncthing";
+      ProgramArguments = [
+        "${pkgs.syncthing}/bin/syncthing"
+        "serve"
+        "--no-browser"
+        "--no-restart"
+      ];
+      RunAtLoad = true;
+      KeepAlive = true;
+      StandardOutPath = "${homeDir}/Library/Logs/syncthing.log";
+      StandardErrorPath = "${homeDir}/Library/Logs/syncthing.log";
+    };
+  };
+
   system.activationScripts.postActivation.text = ''
     mkdir -p ${homeDir}/.ssh
     echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINO4m8QiaIHgVYkgEQPxBHpdebKqxmP5VIVbw3wwlxR4 iwanp-s23' > ${homeDir}/.ssh/authorized_keys
