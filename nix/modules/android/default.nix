@@ -32,6 +32,12 @@
 
   home.file.".bashrc".text = ''
     eval "$(starship init bash)"
+
+    # Auto-start syncthing if not already running
+    if ! pgrep -x syncthing > /dev/null 2>&1; then
+      syncthing serve --no-browser --no-restart > "$HOME/.local/share/syncthing.log" 2>&1 &
+      disown
+    fi
   '';
 
   home.packages = with pkgs; [
@@ -42,5 +48,6 @@
     fzf
     jq
     unzip
+    syncthing
   ];
 }

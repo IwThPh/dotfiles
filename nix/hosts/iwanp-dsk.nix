@@ -33,6 +33,13 @@
 
   virtualisation.docker.enable = true;
 
+  services.syncthing = {
+    enable = true;
+    user = "iwanp";
+    dataDir = "/home/iwanp";
+    openDefaultPorts = true;
+  };
+
   environment.systemPackages = with pkgs; [
     vim
     git
