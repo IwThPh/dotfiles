@@ -76,6 +76,7 @@
           modules = [
             nixos-wsl.nixosModules.default
             ./hosts/iwanp-dsk.nix
+            { nixpkgs.config.permittedInsecurePackages = insecurePackages; }
             home-manager.nixosModules.home-manager
             {
               home-manager.extraSpecialArgs = { inherit inputs; };
