@@ -3,6 +3,7 @@
   imports = [
     ../shared/bat.nix
     ../shared/git.nix
+    ../shared/starship.nix
   ];
 
   xdg.dataHome = "${config.home.homeDirectory}/.local/share";
@@ -20,13 +21,10 @@
   home.sessionVariables.LANG = "C.UTF-8";
 
   programs.starship = {
-    enable = true;
-    enableBashIntegration = false;
+    enableZshIntegration = false;
     settings = {
       format = "$directory$git_branch$git_status$cmd_duration$character";
-      directory.truncation_length = 3;
-      git_branch.format = "[$branch]($style) ";
-      cmd_duration.min_time = 2000;
+      right_format = "";
     };
   };
 

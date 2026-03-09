@@ -7,6 +7,7 @@
     ./kubernetes.nix
     ./dotnet.nix
     ./rust.nix
+    ./starship.nix
   ];
 
   xdg.dataHome = "${config.home.homeDirectory}/.local/share";

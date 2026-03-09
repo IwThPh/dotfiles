@@ -4,13 +4,6 @@ if [[ -z "$ZELLIJ" && -z "$NO_ZELLIJ" && -t 0 && -t 1 ]] && command -v zellij &>
   eval "$(zellij setup --generate-auto-start zsh)"
 fi
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -29,9 +22,6 @@ if [[ ! "$PATH" == */home/iwanp/src/fzf/bin* ]]; then
 fi
 
 ### End of Zinit's installer chunk
-zi ice depth"1"
-zi light romkatv/powerlevel10k
-
 zi light-mode for \
     zsh-users/zsh-autosuggestions \
     zsh-users/zsh-completions \
@@ -83,9 +73,6 @@ autoload -Uz compinit
 compinit
 
 zinit cdreplay -q
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Key bindings
 bindkey '^y' autosuggest-accept
@@ -150,3 +137,8 @@ alias .....='cd ../../../..'
 export PATH="$HOME/.local/bin:$PATH"
 
 SF_AC_ZSH_SETUP_PATH=/Users/iwanp/Library/Caches/sf/autocomplete/zsh_setup && test -f $SF_AC_ZSH_SETUP_PATH && source $SF_AC_ZSH_SETUP_PATH; # sf autocomplete setup
+
+# Starship prompt (fallback for non-Nix environments)
+if command -v starship &> /dev/null; then
+  eval "$(starship init zsh)"
+fi
