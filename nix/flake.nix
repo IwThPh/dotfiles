@@ -18,9 +18,14 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, nixos-wsl, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, nixos-wsl, claude-code, ... }@inputs:
     let
       insecurePackages = [
         "dotnet-combined"
@@ -48,6 +53,7 @@
             system = "aarch64-darwin";
             config.allowUnfree = true;
             config.permittedInsecurePackages = insecurePackages;
+            overlays = [ claude-code.overlays.default ];
           };
 
           specialArgs = {
@@ -76,7 +82,10 @@
           modules = [
             nixos-wsl.nixosModules.default
             ./hosts/iwanp-dsk.nix
-            { nixpkgs.config.permittedInsecurePackages = insecurePackages; }
+            {
+              nixpkgs.config.permittedInsecurePackages = insecurePackages;
+              nixpkgs.overlays = [ claude-code.overlays.default ];
+            }
             home-manager.nixosModules.home-manager
             {
               home-manager.extraSpecialArgs = { inherit inputs; };
@@ -93,6 +102,7 @@
           pkgs = import nixpkgs {
             system = "aarch64-linux";
             config.allowUnfree = true;
+            overlays = [ claude-code.overlays.default ];
           };
           extraSpecialArgs = { inherit inputs; };
           modules = [ ./modules/android ];
