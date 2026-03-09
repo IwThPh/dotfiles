@@ -18,6 +18,9 @@ in
       vim
       mtr
     ];
+    variables = {
+      HOMEBREW_NO_ANALYTICS = "1";
+    };
   };
 
   system.defaults = {
