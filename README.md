@@ -7,7 +7,7 @@ Supports three platforms:
 | Host        | System           | Description                                                |
 | ----------- | ---------------- | ---------------------------------------------------------- |
 | `iwanp-ski` | `aarch64-darwin` | macOS (Apple Silicon) - full dev environment with GUI apps |
-| `iwanp-dsk` | `x86_64-linux`   | Windows WSL - full dev, no GUI apps                        |
+| `iwanp-dsk` | `x86_64-linux`   | Windows WSL - full dev, k3s cluster, no GUI apps           |
 | `iwanp-s23` | `aarch64-linux`  | Nix-on-Droid - minimal CLI (SSH jump box + light editing)  |
 
 ## Setup
@@ -67,6 +67,41 @@ Subsequent rebuilds:
 ```bash
 home-manager switch --flake ~/dotfiles/nix#iwanp-s23
 ```
+
+## Services
+
+### WSL (`iwanp-dsk`)
+
+| Service   | Auto-start | Notes                                       |
+| --------- | ---------- | ------------------------------------------- |
+| Docker    | Yes        | Managed by NixOS `virtualisation.docker`    |
+| k3s       | No         | Single-node k3s server for local dev        |
+| Syncthing | Yes        | File sync, web UI at `http://localhost:8384` |
+
+#### k3s (Kubernetes)
+
+k3s is configured as a single-node server with traefik and servicelb disabled (FluxCD manages ingress). It does not start on boot — manage it manually:
+
+```bash
+sudo systemctl start k3s    # Start the cluster
+sudo systemctl stop k3s     # Stop (frees ~500MB RAM, state preserved)
+kubectl get nodes            # Verify node is Ready (~60s after start)
+```
+
+Kubeconfig is at `/etc/rancher/k3s/k3s.yaml` (readable without sudo). The `KUBECONFIG` env var is set automatically.
+
+To reset all cluster state:
+
+```bash
+sudo systemctl stop k3s && sudo rm -rf /var/lib/rancher/k3s && sudo systemctl start k3s
+```
+
+### macOS (`iwanp-ski`)
+
+| Service   | Auto-start | Notes                                       |
+| --------- | ---------- | ------------------------------------------- |
+| Docker    | No         | Via Colima VM                               |
+| Syncthing | Yes        | File sync, web UI at `http://localhost:8384` |
 
 ## Stow
 
