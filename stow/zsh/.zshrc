@@ -64,8 +64,9 @@ if command -v fzf &> /dev/null; then
   eval "$(fzf --zsh)"
 fi
 
-if command -v colima &> /dev/null; then
-    eval "$(colima completion zsh > "${fpath[1]}/_colima")"
+# Colima completion (only regenerate if missing)
+if command -v colima &> /dev/null && [[ ! -f "${fpath[1]}/_colima" ]]; then
+  colima completion zsh > "${fpath[1]}/_colima"
 fi
 
 # Load completions
@@ -113,18 +114,31 @@ fi
 export EDITOR=nvim
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
+# gh completion (cached)
 if command -v gh &> /dev/null; then
-  gh_token=$(gh auth token)
-  export GITHUB_API_TOKEN="$gh_token"
-  eval "$(gh completion -s zsh)"
+  gh_completion="${XDG_CACHE_HOME:-$HOME/.cache}/gh_completion.zsh"
+  if [[ ! -f "$gh_completion" || "$gh_completion" -ot "$(which gh)" ]]; then
+    gh completion -s zsh > "$gh_completion" 2>/dev/null
+  fi
+  source "$gh_completion"
 fi
 
 source ~/.config/zsh/functions.sh
 source ~/.config/zsh/aliases.sh
 
+# nvm lazy-load (saves ~300ms startup)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+  nvm() {
+    unset -f nvm node npm npx
+    source "$NVM_DIR/nvm.sh"
+    [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+    nvm "$@"
+  }
+  node() { nvm && node "$@"; }
+  npm() { nvm && npm "$@"; }
+  npx() { nvm && npx "$@"; }
+fi
 
 alias k='kubectl'
 alias ls='ls --color=auto'
