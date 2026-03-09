@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   imports = [
     ../shared/bat.nix
@@ -21,10 +21,10 @@
   home.sessionVariables.LANG = "C.UTF-8";
 
   programs.starship = {
-    enableZshIntegration = false;
+    enableZshIntegration = lib.mkForce false;
     settings = {
-      format = "$directory$git_branch$git_status$cmd_duration$character";
-      right_format = "";
+      format = lib.mkForce "$directory$git_branch$git_status$cmd_duration$character";
+      right_format = lib.mkForce "";
     };
   };
 
