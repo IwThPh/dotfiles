@@ -4,6 +4,7 @@
     ../shared
     ./home.nix
     ./docker.nix
+    ./k3s.nix
   ];
 
   home.username = "iwanp";

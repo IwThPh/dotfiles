@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   wsl = {
     enable = true;
@@ -32,6 +32,19 @@
   programs.zsh.enable = true;
 
   virtualisation.docker.enable = true;
+
+  services.k3s = {
+    enable = true;
+    role = "server";
+    extraFlags = toString [
+      "--write-kubeconfig-mode=0644"
+      "--disable=traefik"
+      "--disable=servicelb"
+    ];
+  };
+
+  # Don't auto-start k3s on boot — start manually with: sudo systemctl start k3s
+  systemd.services.k3s.wantedBy = lib.mkForce [];
 
   services.syncthing = {
     enable = true;
