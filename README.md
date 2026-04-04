@@ -103,6 +103,39 @@ sudo systemctl stop k3s && sudo rm -rf /var/lib/rancher/k3s && sudo systemctl st
 | Docker    | No         | Via Colima VM                               |
 | Syncthing | Yes        | File sync, web UI at `http://localhost:8384` |
 
+## Bitwarden CLI
+
+Shell helpers for session management and multi-account switching are loaded automatically when `bw` is available. To use multiple accounts, create a profiles file:
+
+```bash
+mkdir -p ~/.config/bw
+touch ~/.config/bw/profiles
+chmod 600 ~/.config/bw/profiles
+```
+
+Add one profile per line in the format `name|server_url|email`:
+
+```
+personal|https://vault.bitwarden.com|you@personal.com
+work|https://bw.company.com|you@company.com
+```
+
+Then switch profiles and unlock:
+
+```bash
+bwp personal   # switch to profile
+bwu             # unlock vault (exports BW_SESSION)
+bw get password "my-secret"  # fetch secrets
+```
+
+| Command | Purpose |
+| ------- | ------- |
+| `bwl` | Login and auto-export `BW_SESSION` |
+| `bwu` | Unlock and auto-export `BW_SESSION` |
+| `bwlock` | Lock vault and clear session |
+| `bwp [name]` | Switch account profile (no args lists profiles) |
+| `bws <item> [field]` | Fetch a secret (`password` default) |
+
 ## Stow
 
 App-specific dotfile configs structured to mirror `$HOME`. Stow can be used independently to symlink any of the packages below without Nix. When using nix-darwin or home-manager, symlinking is handled automatically via `home.file`.

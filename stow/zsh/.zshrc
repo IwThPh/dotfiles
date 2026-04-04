@@ -126,6 +126,7 @@ fi
 
 source ~/.config/zsh/functions.sh
 source ~/.config/zsh/aliases.sh
+source ~/.config/zsh/bitwarden.sh
 
 # nvm lazy-load (saves ~300ms startup)
 export NVM_DIR="$HOME/.nvm"
