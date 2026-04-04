@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 {
   home.packages = with pkgs; [
     k9s
@@ -6,6 +6,7 @@
     kubectx
     kustomize
     kubernetes-helm
+    pkgs-unstable.talosctl
     fluxcd
     sops
     age

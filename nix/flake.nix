@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -25,7 +26,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, nixos-wsl, claude-code, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, nixos-wsl, claude-code, ... }@inputs:
     let
       insecurePackages = [
         "dotnet-combined"
@@ -66,6 +67,10 @@
             {
               home-manager.extraSpecialArgs = {
                 inherit inputs;
+                pkgs-unstable = import nixpkgs-unstable {
+                  system = "aarch64-darwin";
+                  config.allowUnfree = true;
+                };
               };
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -88,7 +93,13 @@
             }
             home-manager.nixosModules.home-manager
             {
-              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                pkgs-unstable = import nixpkgs-unstable {
+                  system = "x86_64-linux";
+                  config.allowUnfree = true;
+                };
+              };
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.iwanp = { imports = [ ./modules/linux ]; };
@@ -104,7 +115,13 @@
             config.allowUnfree = true;
             overlays = [ claude-code.overlays.default ];
           };
-          extraSpecialArgs = { inherit inputs; };
+          extraSpecialArgs = {
+            inherit inputs;
+            pkgs-unstable = import nixpkgs-unstable {
+              system = "aarch64-linux";
+              config.allowUnfree = true;
+            };
+          };
           modules = [ ./modules/android ];
         };
       };
