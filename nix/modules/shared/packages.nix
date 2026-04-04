@@ -23,17 +23,18 @@
     tree-sitter
 
     # Programs
-    claude-code
-    powershell
-    gh
     azure-cli
+    bitwarden-cli
+    claude-code
+    cmake
     doctl
     doppler
     duckdb
+    gh
     google-cloud-sdk
-    cmake
     k6
     neovim
+    powershell
     sqlite
     terraform
     yamllint
